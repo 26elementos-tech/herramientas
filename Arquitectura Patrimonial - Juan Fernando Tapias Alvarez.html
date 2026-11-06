@@ -1940,12 +1940,17 @@ function cloudNewId(){
   return Array.from(a).map(n=>n.toString(36)).join('').slice(0,26);
 }
 function cloudDocId(){
-  let id = (location.hash || '').replace(/^#/, '').trim();
-  if(!/^[A-Za-z0-9_-]{12,60}$/.test(id)){
-    id = cloudNewId();
-    try{ history.replaceState(null, '', location.pathname + location.search + '#' + id); }
-    catch(e){ location.hash = id; }
-  }
+  // El código del cliente se lee de: ?c=CODIGO (preferido), luego #CODIGO (links anteriores),
+  // luego de la copia guardada en este dispositivo. Solo si no hay ninguno se crea uno nuevo.
+  const ok = v => /^[A-Za-z0-9_-]{12,60}$/.test(v || '');
+  const KEY = 'cloudId:' + location.pathname;
+  let id = '';
+  try{ id = new URLSearchParams(location.search).get('c') || ''; }catch(e){}
+  if(!ok(id)) id = (location.hash || '').replace(/^#/, '').trim();
+  if(!ok(id)){ try{ id = localStorage.getItem(KEY) || ''; }catch(e){} }
+  if(!ok(id)) id = cloudNewId();
+  try{ localStorage.setItem(KEY, id); }catch(e){}
+  try{ history.replaceState(null, '', location.pathname + '?c=' + id); }catch(e){}
   return id;
 }
 function cloudEditing(){
