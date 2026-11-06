@@ -4202,7 +4202,7 @@ async function shareJSON(){
 function applyImportedState(jsonStr){
   const parsed = JSON.parse(jsonStr);
   const def = defaultState();
-  state = Object.assign(def, parsed);
+  state = Object.assign({}, def, parsed);
   state.cliente = Object.assign({}, def.cliente, parsed.cliente||{});
   state.proyecto = Object.assign({}, def.proyecto, parsed.proyecto||{});
   state.diagnostico = Object.assign({}, def.diagnostico, parsed.diagnostico||{});
