@@ -668,6 +668,65 @@ table.data-table td.del-cell{ text-align:center; }
         <div class="kpi5-grid" id="gastosSeparados"></div>
       </div>
 
+      <div class="module" id="ventasModule">
+        <div class="module-title">Corte de Ventas Diarias</div>
+        <div class="module-desc">Cada venta se registra con su folio, forma de pago y descripción. El corte del día se calcula solo: total vendido, desglose por forma de pago y cuadre del efectivo en caja. Las ventas no se borran: si hay un error se <b>anulan</b> y el folio queda en el registro.</div>
+
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+          <label style="font-size:11px; color:var(--gray-2); text-transform:uppercase; letter-spacing:.06em;">Día del corte:</label>
+          <div class="field" style="margin:0;"><input type="date" id="ventaFecha"></div>
+          <button class="btn-sm" id="ventaHoyBtn">Hoy</button>
+          <span id="ventaEstadoCorte" style="font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;"></span>
+        </div>
+
+        <div class="card" style="padding:18px 20px; margin-bottom:18px;">
+          <div class="grid-4">
+            <div class="field"><label>Folio</label><input type="text" id="ventaAddFolio" autocomplete="off"></div>
+            <div class="field"><label>Forma de pago</label>
+              <select class="sel" id="ventaAddPago"><option>Efectivo</option><option>Transferencia</option><option>Liga de pago</option><option>Otro</option></select>
+            </div>
+            <div class="field"><label>Descripción de la venta</label><input type="text" id="ventaAddDesc" placeholder="Ej. Consulta + 3 sesiones"></div>
+            <div class="field"><label>Monto (MXN)</label><input type="number" id="ventaAddMonto" min="0" step="0.01" inputmode="decimal"></div>
+          </div>
+          <div class="field" id="ventaAddOtroWrap" style="display:none; margin-top:10px;"><label>¿Qué otro medio de pago?</label><input type="text" id="ventaAddOtro" placeholder="Ej. Tarjeta, cheque, depósito"></div>
+          <div style="display:flex; gap:10px; margin-top:12px; align-items:center; flex-wrap:wrap;">
+            <button class="btn-sm primary" id="ventaAddBtn">+ Registrar venta</button>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:18px;">
+          <table class="data-table" style="min-width:720px;">
+            <thead><tr><th>Folio</th><th>Hora</th><th>Pago</th><th>Descripción</th><th>Monto</th><th></th></tr></thead>
+            <tbody id="ventaBody"></tbody>
+          </table>
+        </div>
+
+        <div class="module-title" style="font-size:10px;">Corte del día</div>
+        <div class="card summary-card" style="margin-bottom:14px;">
+          <div class="tt">Total vendido en el día</div>
+          <div class="big" id="ventaTotalDia" style="font-family:var(--mono); font-size:26px; font-weight:800; color:var(--white);">$0</div>
+          <div id="ventaConteo" style="font-size:12px; color:var(--gray-2); margin-top:4px;"></div>
+        </div>
+        <div class="kpi5-grid" id="ventaPagoGrid" style="margin-bottom:14px;"></div>
+
+        <div class="card" style="padding:18px 20px; margin-bottom:14px;">
+          <div class="tt" style="margin-bottom:10px;">Cuadre de efectivo en caja</div>
+          <div class="grid-4">
+            <div class="field"><label>Fondo inicial de caja</label><input type="number" id="ventaFondo" min="0" step="0.01" inputmode="decimal" placeholder="0"></div>
+            <div class="field"><label>Efectivo esperado</label><div id="ventaEsperado" style="font-family:var(--mono); font-size:18px; font-weight:800; color:var(--white); padding-top:8px;">$0</div></div>
+            <div class="field"><label>Efectivo contado</label><input type="number" id="ventaContado" min="0" step="0.01" inputmode="decimal" placeholder="Cuenta la caja"></div>
+            <div class="field"><label>Diferencia</label><div id="ventaDiferencia" style="font-family:var(--mono); font-size:18px; font-weight:800; padding-top:8px;">—</div></div>
+          </div>
+          <div style="font-size:11.5px; color:var(--gray-2); margin-top:8px;">Efectivo esperado = fondo inicial + ventas en efectivo. Transferencias y ligas de pago se verifican contra el banco.</div>
+          <div class="field" style="margin-top:12px;"><label>Notas del corte</label><input type="text" id="ventaNotas" placeholder="Ej. Se retiraron $500 para proveedor"></div>
+          <div style="display:flex; gap:10px; margin-top:12px; align-items:center; flex-wrap:wrap;">
+            <button class="btn-sm primary" id="ventaCerrarBtn">Cerrar corte del día</button>
+            <button class="btn-sm" id="ventaCopiarBtn">Copiar resumen</button>
+          </div>
+        </div>
+        <div id="ventaMesResumen" style="font-size:12.5px; color:var(--gray-1); margin-bottom:6px;"></div>
+      </div>
+
       <div class="module">
         <div class="module-title">Registro de Gastos</div>
         <div class="module-desc">Fernando captura aquí cada gasto del negocio, día por día, clasificado por categoría. Esto alimenta el resumen mensual por categoría de abajo.</div>
@@ -1641,6 +1700,8 @@ Se cuenta con una fotografía inicial clara de ingresos, estructura de personal,
     /* Registro de gastos día a día, clasificado por categoría — lo captura Fernando directamente. */
     gastosCategorias: ['Renta','Sueldos y Comisiones','Gastos Fijos','Variables','Marketing','Insumos','Impuestos','Otros'],
     gastosRegistro: [],
+    ventas: [],
+    ventasCortes: {},
 
     /* ======================= CHECK-UP OPERATIVO (22 oct 2026) =======================
        La Plataforma Madre aplica el cuestionario. Aquí solo se registra el RESULTADO
@@ -1881,6 +1942,8 @@ function loadState(){
     if(!merged.avances || !Array.isArray(merged.avances)) merged.avances = parsed.avances || def.avances;
     if(!merged.gastosCategorias || !Array.isArray(merged.gastosCategorias) || merged.gastosCategorias.length===0) merged.gastosCategorias = parsed.gastosCategorias || def.gastosCategorias;
     if(!Array.isArray(merged.gastosRegistro)) merged.gastosRegistro = parsed.gastosRegistro || def.gastosRegistro;
+    if(!Array.isArray(merged.ventas)) merged.ventas = [];
+    if(!merged.ventasCortes || typeof merged.ventasCortes!=='object' || Array.isArray(merged.ventasCortes)) merged.ventasCortes = {};
     merged.checkupOperativo = Object.assign({}, def.checkupOperativo, parsed.checkupOperativo||{});
     if(!merged.checkupOperativo.aclaraciones || !merged.checkupOperativo.aclaraciones.length) merged.checkupOperativo.aclaraciones = def.checkupOperativo.aclaraciones;
     if(!merged.checkupOperativo.areasMadurez || !merged.checkupOperativo.areasMadurez.length) merged.checkupOperativo.areasMadurez = def.checkupOperativo.areasMadurez;
@@ -1909,6 +1972,219 @@ function saveState(){
   }, 150);
 }
 
+
+/* ==========================================================================
+   CORTE DE VENTAS DIARIAS (módulo Negocio)
+   state.ventas: [{id, folio, fecha, hora, pago, pagoOtro, descripcion, monto, anulada}]
+   state.ventasCortes: { 'AAAA-MM-DD': {fondo, contado, notas, cerrado} }
+   ========================================================================== */
+const VENTA_PAGOS = ['Efectivo','Transferencia','Liga de pago','Otro'];
+let ventasFecha = '';
+function ventasPad(n){ return String(n).padStart(2,'0'); }
+function ventasHoy(){ const d=new Date(); return d.getFullYear()+'-'+ventasPad(d.getMonth()+1)+'-'+ventasPad(d.getDate()); }
+function ventasHora(){ const d=new Date(); return ventasPad(d.getHours())+':'+ventasPad(d.getMinutes()); }
+function ventasFechaBonita(f){ const m=String(f||'').match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? m[3]+'/'+m[2]+'/'+m[1] : String(f||''); }
+function ventasRound(n){ return Math.round((Number(n)||0)*100)/100; }
+function ventasDelDia(f){ return (state.ventas||[]).filter(v=>v.fecha===f); }
+function ventasCorteGet(f){ const c = state.ventasCortes && state.ventasCortes[f]; return c || {fondo:'', contado:'', notas:'', cerrado:false}; }
+function ventasCorteSet(f){
+  if(!state.ventasCortes || typeof state.ventasCortes!=='object') state.ventasCortes = {};
+  if(!state.ventasCortes[f]) state.ventasCortes[f] = {fondo:'', contado:'', notas:'', cerrado:false};
+  return state.ventasCortes[f];
+}
+function ventasSiguienteFolio(f){
+  const m = String(f||'').match(/^(\d{4})-(\d{2})-(\d{2})$/); if(!m) return '';
+  const pref = m[1].slice(2)+m[2]+m[3];
+  let max = 0;
+  (state.ventas||[]).forEach(v=>{ if(v.fecha===f){ const x = String(v.folio||'').match(/-(\d+)$/); if(x) max = Math.max(max, parseInt(x[1],10)); } });
+  return pref+'-'+ventasPad(max+1);
+}
+function ventasTotales(f){
+  const t = { n:0, anuladas:0, total:0, por:{} };
+  VENTA_PAGOS.forEach(p=> t.por[p] = {n:0, monto:0});
+  ventasDelDia(f).forEach(v=>{
+    if(v.anulada){ t.anuladas++; return; }
+    const m = Number(v.monto)||0; const p = t.por[v.pago] ? v.pago : 'Otro';
+    t.n++; t.total += m; t.por[p].n++; t.por[p].monto += m;
+  });
+  t.total = ventasRound(t.total);
+  VENTA_PAGOS.forEach(p=> t.por[p].monto = ventasRound(t.por[p].monto));
+  return t;
+}
+function ventasCuadre(f){
+  const t = ventasTotales(f), c = ventasCorteGet(f);
+  const esperado = ventasRound((Number(c.fondo)||0) + t.por['Efectivo'].monto);
+  const hayContado = !(c.contado==='' || c.contado==null);
+  const dif = hayContado ? ventasRound((Number(c.contado)||0) - esperado) : null;
+  return { t, c, esperado, hayContado, dif };
+}
+
+function renderVentas(){
+  const body = $('#ventaBody'); if(!body) return;
+  if(!Array.isArray(state.ventas)) state.ventas = [];
+  if(!ventasFecha) ventasFecha = ventasHoy();
+  const f = ventasFecha;
+  const fInp = $('#ventaFecha'); if(fInp && fInp.value!==f) fInp.value = f;
+  const cerrado = !!ventasCorteGet(f).cerrado;
+
+  // folio sugerido (solo si la persona no lo está escribiendo)
+  const folioEl = $('#ventaAddFolio');
+  if(folioEl && !folioEl.dataset.touched && document.activeElement!==folioEl) folioEl.value = ventasSiguienteFolio(f);
+  ['#ventaAddFolio','#ventaAddPago','#ventaAddDesc','#ventaAddMonto','#ventaAddOtro','#ventaAddBtn'].forEach(sel=>{ const e=$(sel); if(e) e.disabled = cerrado; });
+
+  // tabla del día
+  const dia = ventasDelDia(f).slice().sort((a,b)=> String(a.hora||'').localeCompare(String(b.hora||'')) || String(a.folio||'').localeCompare(String(b.folio||'')));
+  const cuenta = {};
+  state.ventas.forEach(v=>{ const k=String(v.folio||'').trim().toLowerCase(); if(k) cuenta[k]=(cuenta[k]||0)+1; });
+  if(dia.length===0){
+    body.innerHTML = `<tr><td colspan="6"><div class="empty-state">Sin ventas registradas en este día todavía.</div></td></tr>`;
+  } else {
+    body.innerHTML = dia.map(v=>{
+      const dup = (cuenta[String(v.folio||'').trim().toLowerCase()]||0) > 1;
+      const dis = cerrado ? 'disabled' : '';
+      const fade = v.anulada ? 'opacity:.45;' : '';
+      return `
+      <tr style="${fade}">
+        <td><input type="text" data-venta="${v.id}" data-f="folio" value="${esc(v.folio)}" ${dis} style="${dup?'border-color:#e85d5d;':''}" ${dup?'title="Folio repetido"':''}></td>
+        <td style="white-space:nowrap; font-size:12px;">${esc(v.hora||'')}${v.anulada?'<div style="color:#e85d5d; font-weight:700; font-size:10px; letter-spacing:.06em;">ANULADA</div>':''}</td>
+        <td>
+          <select class="sel" data-venta="${v.id}" data-f="pago" ${dis}>${VENTA_PAGOS.map(p=>`<option ${v.pago===p?'selected':''}>${p}</option>`).join('')}</select>
+          ${v.pago==='Otro' ? `<input type="text" data-venta="${v.id}" data-f="pagoOtro" value="${esc(v.pagoOtro||'')}" placeholder="¿Cuál?" ${dis} style="margin-top:6px;">` : ''}
+        </td>
+        <td><input type="text" data-venta="${v.id}" data-f="descripcion" value="${esc(v.descripcion||'')}" ${dis}></td>
+        <td><input type="number" min="0" step="0.01" data-venta="${v.id}" data-f="monto" value="${v.monto}" ${dis}></td>
+        <td class="del-cell"><button class="btn-sm" data-anular="${v.id}" ${dis}>${v.anulada?'Restaurar':'Anular'}</button></td>
+      </tr>`;
+    }).join('');
+  }
+  body.querySelectorAll('[data-venta]').forEach(node=>{
+    const item = state.ventas.find(v=>v.id===node.dataset.venta); if(!item) return;
+    node.addEventListener('input', ()=>{
+      item[node.dataset.f] = node.dataset.f==='monto' ? (Number(node.value)||0) : node.value;
+      saveState(); renderVentasResumen();
+    });
+    node.addEventListener('change', ()=>{ if(node.dataset.f==='pago' || node.dataset.f==='folio') renderVentas(); });
+  });
+  body.querySelectorAll('[data-anular]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const item = state.ventas.find(v=>v.id===btn.dataset.anular); if(!item) return;
+      if(!item.anulada && !confirm('¿Anular la venta '+item.folio+'? El folio se conserva, pero ya no suma al corte.')) return;
+      item.anulada = !item.anulada; saveState(); renderVentas();
+    };
+  });
+  renderVentasResumen();
+}
+
+function renderVentasResumen(){
+  if(!$('#ventaTotalDia')) return;
+  const f = ventasFecha || ventasHoy();
+  const q = ventasCuadre(f), t = q.t, c = q.c;
+  $('#ventaTotalDia').textContent = '$'+fmtNum(t.total);
+  $('#ventaConteo').textContent = t.n+' venta'+(t.n===1?'':'s') + (t.anuladas ? ' · '+t.anuladas+' anulada'+(t.anuladas===1?'':'s') : '');
+  $('#ventaPagoGrid').innerHTML = VENTA_PAGOS.map(p=>`
+    <div class="card kpi5-card">
+      <div class="nm">${esc(p)}</div>
+      <div class="big" style="font-size:18px;">$${fmtNum(t.por[p].monto)}</div>
+      <div style="font-size:11px; color:var(--gray-2); margin-top:4px;">${t.por[p].n} venta${t.por[p].n===1?'':'s'}</div>
+    </div>`).join('');
+
+  [['#ventaFondo', c.fondo], ['#ventaContado', c.contado], ['#ventaNotas', c.notas]].forEach(([sel,val])=>{
+    const el = $(sel); if(!el) return;
+    if(document.activeElement!==el) el.value = (val==null ? '' : val);
+    el.disabled = !!c.cerrado;
+  });
+  $('#ventaEsperado').textContent = '$'+fmtNum(q.esperado);
+  const dEl = $('#ventaDiferencia');
+  if(!q.hayContado){ dEl.textContent = '—'; dEl.style.color = ''; }
+  else if(q.dif===0){ dEl.textContent = 'Cuadra ✓'; dEl.style.color = '#5fd38d'; }
+  else if(q.dif>0){ dEl.textContent = 'Sobra $'+fmtNum(q.dif); dEl.style.color = '#e8b94d'; }
+  else { dEl.textContent = 'Falta $'+fmtNum(Math.abs(q.dif)); dEl.style.color = '#e85d5d'; }
+
+  $('#ventaCerrarBtn').textContent = c.cerrado ? 'Reabrir corte' : 'Cerrar corte del día';
+  const est = $('#ventaEstadoCorte');
+  est.textContent = c.cerrado ? '● Corte cerrado' : '● Corte abierto';
+  est.style.color = c.cerrado ? '#5fd38d' : '#e8b94d';
+
+  // acumulado del mes
+  const mk = (typeof mesKeyFromFecha==='function') ? mesKeyFromFecha(f) : '';
+  const mesEl = $('#ventaMesResumen');
+  if(mk){
+    let n=0, tot=0;
+    state.ventas.forEach(v=>{ if(!v.anulada && mesKeyFromFecha(v.fecha)===mk){ n++; tot += Number(v.monto)||0; } });
+    mesEl.innerHTML = `Acumulado de <b>${esc(mesKeyLabel(mk))}</b>: <b>$${fmtNum(ventasRound(tot))}</b> en ${n} venta${n===1?'':'s'}.`;
+  } else { mesEl.textContent = ''; }
+}
+
+function ventasResumenTexto(f){
+  const q = ventasCuadre(f), t = q.t, c = q.c, L = [];
+  L.push('CORTE DE VENTAS — '+ventasFechaBonita(f));
+  L.push('Ventas: '+t.n+(t.anuladas ? ' (+'+t.anuladas+' anuladas)' : ''));
+  L.push('TOTAL: $'+fmtNum(t.total));
+  VENTA_PAGOS.forEach(p=> L.push('• '+p+': $'+fmtNum(t.por[p].monto)+' ('+t.por[p].n+')'));
+  L.push('Fondo inicial: $'+fmtNum(Number(c.fondo)||0));
+  L.push('Efectivo esperado en caja: $'+fmtNum(q.esperado));
+  if(q.hayContado){
+    L.push('Efectivo contado: $'+fmtNum(Number(c.contado)||0));
+    L.push('Diferencia: '+(q.dif===0 ? 'cuadra' : (q.dif>0 ? 'sobrante' : 'faltante')+' $'+fmtNum(Math.abs(q.dif))));
+  }
+  if(c.notas) L.push('Notas: '+c.notas);
+  L.push(c.cerrado ? 'Corte cerrado' : 'Corte abierto');
+  return L.join('\n');
+}
+
+$onload(()=>{
+  if(!$('#ventaAddBtn')) return;
+  $('#ventaFecha').addEventListener('change', e=>{
+    ventasFecha = e.target.value || ventasHoy();
+    const fe = $('#ventaAddFolio'); delete fe.dataset.touched;
+    renderVentas();
+  });
+  $('#ventaHoyBtn').onclick = ()=>{ ventasFecha = ventasHoy(); const fe = $('#ventaAddFolio'); delete fe.dataset.touched; renderVentas(); };
+  $('#ventaAddFolio').addEventListener('input', e=>{ e.target.dataset.touched = '1'; });
+  $('#ventaAddPago').addEventListener('change', e=>{ $('#ventaAddOtroWrap').style.display = e.target.value==='Otro' ? 'block' : 'none'; });
+
+  $('#ventaAddBtn').onclick = ()=>{
+    const f = ventasFecha || ventasHoy();
+    if(ventasCorteGet(f).cerrado){ flashHint('ventaAddBtn', 'El corte de este día está cerrado. Reábrelo para agregar ventas.', 'error'); return; }
+    const folio = $('#ventaAddFolio').value.trim(), pago = $('#ventaAddPago').value, desc = $('#ventaAddDesc').value.trim();
+    const monto = $('#ventaAddMonto').value, otro = $('#ventaAddOtro').value.trim();
+    if(!folio){ flashHint('ventaAddBtn', 'Falta el folio.', 'error'); return; }
+    if(!desc){ flashHint('ventaAddBtn', 'Describe la venta.', 'error'); return; }
+    if(monto==='' || !(Number(monto)>0)){ flashHint('ventaAddBtn', 'Indica un monto mayor a 0.', 'error'); return; }
+    if(pago==='Otro' && !otro){ flashHint('ventaAddBtn', 'Indica cuál otro medio de pago.', 'error'); return; }
+    if(state.ventas.some(v=> String(v.folio||'').trim().toLowerCase()===folio.toLowerCase())){ flashHint('ventaAddBtn', 'Ese folio ya existe. Usa otro.', 'error'); return; }
+    state.ventas.push({ id:uid(), folio, fecha:f, hora:ventasHora(), pago, pagoOtro: pago==='Otro' ? otro : '', descripcion:desc, monto:Number(monto), anulada:false });
+    saveState();
+    $('#ventaAddDesc').value = ''; $('#ventaAddMonto').value = ''; $('#ventaAddOtro').value = '';
+    delete $('#ventaAddFolio').dataset.touched;
+    renderVentas();
+    flashHint('ventaAddBtn', '✓ Venta registrada.', 'ok');
+  };
+
+  $('#ventaFondo').addEventListener('input', e=>{ const c = ventasCorteSet(ventasFecha||ventasHoy()); c.fondo = e.target.value; saveState(); renderVentasResumen(); });
+  $('#ventaContado').addEventListener('input', e=>{ const c = ventasCorteSet(ventasFecha||ventasHoy()); c.contado = e.target.value; saveState(); renderVentasResumen(); });
+  $('#ventaNotas').addEventListener('input', e=>{ const c = ventasCorteSet(ventasFecha||ventasHoy()); c.notas = e.target.value; saveState(); });
+
+  $('#ventaCerrarBtn').onclick = ()=>{
+    const f = ventasFecha || ventasHoy();
+    const c = ventasCorteSet(f);
+    if(c.cerrado){
+      if(!confirm('¿Reabrir el corte de este día? Se podrán editar ventas y cifras otra vez.')) return;
+      c.cerrado = false;
+    } else {
+      if(c.contado==='' || c.contado==null){ if(!confirm('Aún no capturas el efectivo contado. ¿Cerrar el corte de todos modos?')) return; }
+      c.cerrado = true; c.cerradoHora = ventasHora();
+    }
+    saveState(); renderVentas();
+  };
+  $('#ventaCopiarBtn').onclick = async ()=>{
+    const txt = ventasResumenTexto(ventasFecha || ventasHoy());
+    let ok = false;
+    try{ if(navigator.clipboard && navigator.clipboard.writeText){ await navigator.clipboard.writeText(txt); ok = true; } }catch(e){}
+    if(ok) flashHint('ventaCopiarBtn', '✓ Resumen copiado. Pégalo en WhatsApp o donde lo necesites.', 'ok');
+    else prompt('Copia el resumen del corte:', txt);
+  };
+});
 
 /* ==========================================================================
    SINCRONIZACIÓN EN LA NUBE (Firebase · Firestore)
@@ -1957,15 +2233,32 @@ function cloudEditing(){
   const a = document.activeElement;
   return !!(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName));
 }
+function cloudMergeVentas(json){
+  // Si en este dispositivo hay ventas que la nube aún no tiene (capturadas casi al mismo tiempo
+  // desde otro dispositivo), se conservan: las ventas nunca se borran, solo se anulan.
+  try{
+    const remote = JSON.parse(json);
+    const loc = Array.isArray(state.ventas) ? state.ventas : [];
+    const rem = Array.isArray(remote.ventas) ? remote.ventas : [];
+    const ids = new Set(rem.map(v=>v && v.id));
+    const extra = loc.filter(v=> v && !ids.has(v.id));
+    if(!extra.length) return { json, changed:false };
+    remote.ventas = rem.concat(extra);
+    return { json: JSON.stringify(remote), changed:true };
+  }catch(e){ return { json, changed:false }; }
+}
 function cloudApply(json){
   if(cloudEditing()){ cloudPending = json; return; }   // no interrumpir a quien está escribiendo
+  let changed = false;
   cloudSuppress = true;
   try{
-    applyImportedState(json);
+    const m = cloudMergeVentas(json); changed = m.changed;
+    applyImportedState(m.json);
     cloudLastJSON = JSON.stringify(state);
     cloudBadge('Sincronizado', '#5fd38d');
   }catch(e){ console.warn('No se pudo aplicar el cambio remoto', e); }
   finally{ cloudSuppress = false; }
+  if(changed) cloudPush(true);
 }
 function cloudPush(force){
   if(!cloudDoc || !cloudReady || cloudSuppress) return;
@@ -4227,6 +4520,8 @@ function applyImportedState(jsonStr){
   state.avances = Array.isArray(parsed.avances) ? parsed.avances : def.avances;
   state.gastosCategorias = (parsed.gastosCategorias && parsed.gastosCategorias.length) ? parsed.gastosCategorias : def.gastosCategorias;
   state.gastosRegistro = Array.isArray(parsed.gastosRegistro) ? parsed.gastosRegistro : def.gastosRegistro;
+  state.ventas = Array.isArray(parsed.ventas) ? parsed.ventas : [];
+  state.ventasCortes = (parsed.ventasCortes && typeof parsed.ventasCortes==='object' && !Array.isArray(parsed.ventasCortes)) ? parsed.ventasCortes : {};
   state.checkupOperativo = Object.assign({}, def.checkupOperativo, parsed.checkupOperativo||{});
   state.evaluacionEquipo = (parsed.evaluacionEquipo && parsed.evaluacionEquipo.length) ? parsed.evaluacionEquipo : def.evaluacionEquipo;
   state.diagnosticoFinanciero = Object.assign({}, def.diagnosticoFinanciero, parsed.diagnosticoFinanciero||{});
@@ -4340,6 +4635,7 @@ function renderAll(){
   safeRun('renderNegocioEjecutivo', renderNegocioEjecutivo);
   safeRun('renderFlujoResumen', renderFlujoResumen);
   safeRun('renderGastosRegistro', renderGastosRegistro);
+  safeRun('renderVentas', renderVentas);
   safeRun('renderCheckupOperativo', renderCheckupOperativo);
   safeRun('renderEvaluacionEquipo', renderEvaluacionEquipo);
   safeRun('renderDiagnosticoFinanciero', renderDiagnosticoFinanciero);
