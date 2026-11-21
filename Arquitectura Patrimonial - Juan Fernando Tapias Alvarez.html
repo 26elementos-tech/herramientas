@@ -782,6 +782,59 @@ table.data-table td.del-cell{ text-align:center; }
         </div>
       </div>
 
+      <div class="module" id="diagnosticoProcesosModule">
+        <div class="module-title">Diagnóstico de Procesos</div>
+        <div class="module-desc">Check-up Operativo de Elementos Financieros — 10 áreas, 53 preguntas calificadas, escala 1 a 4. Visita: <span id="dpFechaVisita"></span> · <span id="dpFechaAprobacion"></span>.</div>
+
+        <div class="summary-pair" style="margin-bottom:14px;">
+          <div class="card summary-card">
+            <div class="tt">Nivel actual de la clínica</div>
+            <div class="tx" id="dpNivelActual" style="font-family:var(--mono); font-size:20px; font-weight:800; color:var(--white);"></div>
+          </div>
+          <div class="card summary-card">
+            <div class="tt">Meta a 90 días</div>
+            <div class="tx" id="dpMeta90" style="font-family:var(--mono); font-size:20px; font-weight:800; color:var(--gold);"></div>
+          </div>
+        </div>
+        <div class="card" style="padding:16px 18px; margin-bottom:18px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+            <span style="font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--gray-2); font-weight:700;">Riesgo general</span>
+            <span class="pill" id="dpRiesgoPill"></span>
+          </div>
+          <p id="dpRiesgoResumen" style="font-size:13px; color:var(--gray-1); margin:0 0 10px;"></p>
+          <p id="dpLecturaBreve" style="font-size:13px; color:var(--white); margin:0;"></p>
+        </div>
+
+        <div class="module-title" style="font-size:10px;">Números Clave (ESTIMADOS)</div>
+        <div class="stack" id="dpNumerosClaveList" style="margin-bottom:10px;"></div>
+        <p id="dpNumerosClaveNota" style="font-size:11.5px; color:var(--gray-2); margin:0 0 18px;"></p>
+
+        <div class="module-title" style="font-size:10px;">Resultado por Área</div>
+        <div class="module-desc" style="margin-top:-6px;">Mismo detalle y mismos valores que el módulo Check-up Operativo, más abajo — se muestra aquí para tener la lectura completa del diagnóstico en un solo lugar.</div>
+        <div class="table-wrap" style="margin-bottom:18px;">
+          <table class="data-table" style="min-width:820px;">
+            <thead><tr><th>Área</th><th>Nivel hoy</th><th>Etiqueta</th><th>Riesgo</th><th>Impacto principal</th><th>Meta 90 días</th></tr></thead>
+            <tbody id="dpAreasGrid"></tbody>
+          </table>
+        </div>
+
+        <div class="module-title" style="font-size:10px;">Equipo</div>
+        <div class="card" style="padding:16px 18px; margin-bottom:18px;">
+          <div class="grid-2" style="margin-bottom:10px;">
+            <div class="snapshot-card card"><div class="k">Costo equipo interno</div><div class="v" id="dpCostoInterno">—</div></div>
+            <div class="snapshot-card card"><div class="k">Externos (contador y consultoría)</div><div class="v" id="dpCostoExternos">—</div></div>
+          </div>
+          <p id="dpLecturaEquipo" style="font-size:13px; color:var(--gray-1); margin:0 0 8px;"></p>
+          <p id="dpDondeTrabajar" style="font-size:13px; color:var(--gray-1); margin:0;"></p>
+        </div>
+
+        <div class="banner info" id="dpRutaAviso">La Ruta de Trabajo marcable (46 tareas, 30/60/90 días) vive en el módulo <b>Check-up Operativo</b>, justo abajo, para no duplicarla — ahí se marca y queda sincronizada para los tres.</div>
+
+        <div class="module-title" style="font-size:10px; margin-top:18px;">Lo que sigue</div>
+        <p id="dpSiguientesPasos" style="font-size:13px; color:var(--gray-1); margin:0 0 10px;"></p>
+        <p id="dpNotaPie" style="font-size:11px; color:var(--gray-2); margin:0;"></p>
+      </div>
+
       <div class="module">
         <div class="module-title">Check-up Operativo</div>
         <div class="module-desc">Se aplica en la Plataforma Madre de Elementos Financieros. Aquí se registra el resultado una vez aplicado — no se reconstruye el cuestionario.</div>
@@ -796,9 +849,16 @@ table.data-table td.del-cell{ text-align:center; }
         <div class="module-title" style="font-size:10px;">Aclaraciones Iniciales</div>
         <div class="stack" id="checkupAclaracionesList" style="margin-bottom:18px;"></div>
 
+        <div class="summary-pair" style="margin-bottom:18px;" id="checkupResumenGeneral"></div>
+
         <div class="module-title" style="font-size:10px;">Nivel de Madurez por Área</div>
-        <div class="module-desc" style="margin-top:-6px;">Escala: Inexistente → Informal → Documentado → Medido.</div>
-        <div class="kpi5-grid" id="checkupAreasGrid" style="margin-bottom:18px;"></div>
+        <div class="module-desc" style="margin-top:-6px;">Escala: Inexistente → Informal → Documentado → Medido. Nivel hoy, riesgo, impacto principal y meta a 90 días vienen del Check-up aplicado el 21 de octubre de 2026; la etiqueta es editable para futuras revalidaciones.</div>
+        <div class="table-wrap" style="margin-bottom:18px;">
+          <table class="data-table" style="min-width:820px;">
+            <thead><tr><th>Área</th><th>Nivel hoy</th><th>Etiqueta</th><th>Riesgo</th><th>Impacto principal</th><th>Meta 90 días</th></tr></thead>
+            <tbody id="checkupAreasGrid"></tbody>
+          </table>
+        </div>
 
         <div class="grid-2" style="margin-bottom:18px;">
           <div>
@@ -813,17 +873,27 @@ table.data-table td.del-cell{ text-align:center; }
           </div>
         </div>
 
-        <div class="module-title" style="font-size:10px;">Plan 30-60-90</div>
-        <div class="grid-3">
-          <div class="field"><label>30 días</label><textarea id="checkup30" rows="3"></textarea></div>
-          <div class="field"><label>60 días</label><textarea id="checkup60" rows="3"></textarea></div>
-          <div class="field"><label>90 días</label><textarea id="checkup90" rows="3"></textarea></div>
+        <div class="module-title" style="font-size:10px;">Ruta de Trabajo (marcable) · 30 / 60 / 90 días</div>
+        <div class="module-desc" style="margin-top:-6px;">⚑ = control crítico. Marca el estado, y edita responsable y fecha de cierre conforme avancen — se sincroniza igual que el resto del tablero. <span id="checkupRutaProgreso"></span></div>
+        <div class="table-wrap">
+          <table class="data-table" style="min-width:920px;">
+            <thead><tr><th>#</th><th>Área</th><th>Tarea</th><th>Responsable</th><th>Fecha</th><th>Estado</th></tr></thead>
+            <tbody id="checkupRutaBody"></tbody>
+          </table>
         </div>
       </div>
 
       <div class="module">
         <div class="module-title">Evaluación del Equipo</div>
         <div class="module-desc">Evaluación por función, no por persona. "Información pendiente" cuando falte un dato — nunca se infiere desempeño a partir del salario o de la facturación total de la clínica.</div>
+        <div class="card" style="padding:16px 18px; margin-bottom:16px;">
+          <div class="grid-2" style="margin-bottom:10px;">
+            <div class="snapshot-card card"><div class="k">Costo equipo interno</div><div class="v" id="eqResumenInterno">—</div></div>
+            <div class="snapshot-card card"><div class="k">Externos (contador y consultoría)</div><div class="v" id="eqResumenExternos">—</div></div>
+          </div>
+          <p id="eqResumenLectura" style="font-size:13px; color:var(--gray-1); margin:0 0 8px;"></p>
+          <p id="eqResumenDonde" style="font-size:13px; color:var(--gray-1); margin:0;"></p>
+        </div>
         <div class="stack" id="evaluacionEquipoList"></div>
       </div>
 
@@ -1481,6 +1551,9 @@ function estadoTone(estado){
   if(a.includes(estado)) return 't-amber';
   return 't-neutral';
 }
+function riesgoTone(r){ return r==='Alto' ? 't-red' : r==='Medio' ? 't-amber' : r==='Bajo' ? 't-green' : 't-neutral'; }
+const TAREA_ESTADOS = ['Pendiente','En proceso','Hecho'];
+function tareaTone(e){ return e==='Hecho' ? 't-green' : e==='En proceso' ? 't-amber' : 't-neutral'; }
 function todayISO(){ return new Date().toISOString().slice(0,10); }
 
 /* ==========================================================================
@@ -1707,40 +1780,106 @@ Se cuenta con una fotografía inicial clara de ingresos, estructura de personal,
        La Plataforma Madre aplica el cuestionario. Aquí solo se registra el RESULTADO
        una vez aplicado — no se reconstruye el cuestionario ni se capturan respuestas crudas. */
     checkupOperativo: {
-      estado: 'Pendiente de aplicación',
-      fechaAplicacion: '2026-10-22',
+      estado: 'Diagnóstico completado',
+      fechaAplicacion: '2026-10-21',
+      fechaAprobacion: 'Aprobado por el cliente: noviembre 2026',
+      metodo: 'Check-up Operativo de Elementos Financieros (10 áreas, 53 preguntas calificadas, escala 1 a 4)',
+      escala: '1 Inexistente · 2 Informal · 3 Documentado · 4 Medido',
+      nivelActual: 2.4, nivelActualEtiqueta: 'Informal',
+      meta90: 3.1, meta90Etiqueta: 'Documentado',
+      riesgoGeneral: 'Alto',
+      riesgoResumen: '2 áreas en riesgo alto, 6 en medio y 2 en bajo. Ningún control crítico quedó en nivel 1.',
+      lecturaBreve: 'Lo más fuerte de la clínica es que Fernando conoce sus números y su agenda. Lo más débil es cómo se consiguen y se recuperan pacientes, y que los tratamientos y el paso del paciente por la clínica no están escritos. Por eso la clínica todavía depende mucho de Fernando.',
       aclaraciones: [
         {id:uid(), pregunta:'Los 125 reportados en septiembre: ¿son pacientes distintos, pacientes nuevos o sesiones?', respuesta:''},
         {id:uid(), pregunta:'La distribución 90% fisioterapia y 10% masajes: ¿corresponde a ingresos, pacientes o sesiones?', respuesta:''},
         {id:uid(), pregunta:'Cuando falta un colaborador, ¿qué disminuye 50%: las citas, los ingresos u otra variable? ¿Ocurre con cualquiera?', respuesta:''},
         {id:uid(), pregunta:'¿Paula es su esposa? ¿Cómo se distribuyen las funciones de Cristina y Andrés? ¿Qué modalidad de contratación tiene cada colaborador?', respuesta:''}
       ],
+      /* Resultado por área del Check-up de Procesos (21 oct 2026) — nivelHoy/riesgo/impacto/meta90 vienen del paquete y no se editan desde aquí; "nivel" (etiqueta) sí queda editable para revalidaciones futuras. */
       areasMadurez: [
-        {id:uid(), area:'Procesos', nivel:''},
-        {id:uid(), area:'Responsables', nivel:''},
-        {id:uid(), area:'Dependencias', nivel:''},
-        {id:uid(), area:'Documentación', nivel:''},
-        {id:uid(), area:'Controles', nivel:''},
-        {id:uid(), area:'Indicadores', nivel:''},
-        {id:uid(), area:'Seguimiento', nivel:''},
-        {id:uid(), area:'Riesgos', nivel:''},
-        {id:uid(), area:'Continuidad operativa', nivel:''}
+        {id:uid(), area:'Información y control', nivelHoy:3.4, nivel:'Documentado', riesgo:'Bajo', impacto:'Continuidad', meta90:3.6},
+        {id:uid(), area:'Agenda y capacidad', nivelHoy:3.2, nivel:'Documentado', riesgo:'Bajo', impacto:'Dinero', meta90:3.4},
+        {id:uid(), area:'Caja, cobro y facturación', nivelHoy:2.6, nivel:'Informal', riesgo:'Medio', impacto:'Dinero', meta90:3.1},
+        {id:uid(), area:'Experiencia y atención al paciente', nivelHoy:2.3, nivel:'Informal', riesgo:'Medio', impacto:'Dinero', meta90:3.2},
+        {id:uid(), area:'Tecnología y herramientas', nivelHoy:2.3, nivel:'Informal', riesgo:'Medio', impacto:'Continuidad', meta90:3.0},
+        {id:uid(), area:'Equipo y personal', nivelHoy:2.2, nivel:'Informal', riesgo:'Medio', impacto:'Continuidad', meta90:3.0},
+        {id:uid(), area:'Inventario e insumos', nivelHoy:2.2, nivel:'Informal', riesgo:'Medio', impacto:'Dinero', meta90:3.0},
+        {id:uid(), area:'Dependencia del dueño', nivelHoy:2.2, nivel:'Informal', riesgo:'Medio', impacto:'Continuidad', meta90:3.0},
+        {id:uid(), area:'Captación, conversión y seguimiento', nivelHoy:1.7, nivel:'Inexistente', riesgo:'Alto', impacto:'Pacientes', meta90:3.0},
+        {id:uid(), area:'Procesos y flujo de trabajo', nivelHoy:1.5, nivel:'Inexistente', riesgo:'Alto', impacto:'Continuidad', meta90:3.0}
       ],
       hallazgos: [],
       riesgos: [],
       plan306090: { dias30:'', dias60:'', dias90:'' },
+      /* Ruta de trabajo marcable — 46 tareas del Check-up de Procesos (30/60/90 días). critica=true marca los controles ⚑. */
+      rutaTrabajo: [
+        {id:uid(), numero:1, fase:'30', critica:true,  area:'Atención al paciente',     tarea:'Escribir el protocolo de qué hacer si un paciente se lesiona o tiene molestias, y darle al paciente un contacto definido.', responsable:'Fernando', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:2, fase:'30', critica:true,  area:'Dependencia del dueño',     tarea:'Definir quién cubre a Fernando si falta (valoraciones y ventas).', responsable:'Fernando', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:3, fase:'30', critica:true,  area:'Dependencia del dueño',     tarea:'Hacer un registro resguardado de contraseñas, proveedores y cuentas, fuera del celular de Fernando.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:4, fase:'30', critica:false, area:'Caja',                      tarea:'Definir un lugar cerrado para el efectivo y un día fijo de depósito.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:5, fase:'30', critica:false, area:'Tecnología',                tarea:'Activar respaldo de la información de la clínica.', responsable:'Cristina y Andrés', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:6, fase:'30', critica:false, area:'Caja',                      tarea:'Escribir quién autoriza descuentos y cancelaciones, y dejarlo visible en caja.', responsable:'Fernando', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:7, fase:'60', critica:false, area:'Atención al paciente',      tarea:'Entregar el plan de tratamiento con precio por escrito.', responsable:'Fernando', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:8, fase:'60', critica:false, area:'Inventario',                tarea:'Calcular el costo de insumos por sesión de los tratamientos principales.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:9, fase:'60', critica:false, area:'Inventario',                tarea:'Confirmar si aplica registrar lote (solo si los suplementos lo traen); si no, marcar "No aplica".', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:10, fase:'60', critica:false, area:'Agenda',                   tarea:'Escribir la política de cancelación y comunicarla al agendar.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:11, fase:'60', critica:false, area:'Equipo',                   tarea:'Escribir una descripción de puesto por cada rol.', responsable:'Fernando y Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:12, fase:'60', critica:false, area:'Equipo',                   tarea:'Poner por escrito el esquema de pago de todo el equipo.', responsable:'Fernando', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:13, fase:'60', critica:false, area:'Caja',                     tarea:'Escribir la regla de facturación (quién emite el CFDI y cuándo).', responsable:'Paula y contador', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:14, fase:'60', critica:false, area:'Procesos',                 tarea:'Escribir los protocolos de los tratamientos principales.', responsable:'Fernando y Daniel', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:15, fase:'60', critica:false, area:'Procesos',                 tarea:'Usar un formato único que acompañe al paciente desde que llega hasta que paga.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:16, fase:'60', critica:false, area:'Tecnología',               tarea:'Que todo el equipo use Agenda Pro a diario.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:17, fase:'60', critica:false, area:'Atención al paciente',     tarea:'Volver regla contactar al paciente 24 a 72 horas después de su sesión.', responsable:'Cristina y Andrés', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:18, fase:'60', critica:false, area:'Atención al paciente',     tarea:'Volver regla agendar la siguiente sesión antes de que el paciente se vaya.', responsable:'Terapeutas', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:19, fase:'60', critica:false, area:'Captación',                tarea:'Que una persona definida conteste WhatsApp y redes el mismo día, no Fernando.', responsable:'Cristina y Andrés', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:20, fase:'60', critica:false, area:'Captación',                tarea:'Dar seguimiento con fecha a quien se valoró y no compró.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:21, fase:'60', critica:false, area:'Captación',                tarea:'Avisar a cada paciente cuando le toca su siguiente sesión del paquete.', responsable:'Cristina y Andrés', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:22, fase:'90', critica:true,  area:'Caja',                     tarea:'Que el corte de caja lo firme quien entrega y lo revise otra persona.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:23, fase:'90', critica:true,  area:'Caja',                     tarea:'Agregar una revisión mensual del contador a los cortes.', responsable:'Contador', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:24, fase:'90', critica:true,  area:'Inventario',               tarea:'Que quien compra no sea quien recibe la mercancía.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:25, fase:'90', critica:true,  area:'Tecnología',               tarea:'Dar acceso por persona a los datos de pacientes.', responsable:'Cristina y Andrés', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:26, fase:'90', critica:false, area:'Captación',                tarea:'Sumar cada mes cuánto se gasta en publicidad.', responsable:'Cristina y Andrés', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:27, fase:'90', critica:false, area:'Procesos',                 tarea:'Definir la rutina de apertura y cierre.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:28, fase:'90', critica:false, area:'Equipo',                   tarea:'Hacer un manual de inducción para personal nuevo.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:29, fase:'90', critica:false, area:'Equipo',                   tarea:'Escribir reglas de incentivos.', responsable:'Fernando', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:30, fase:'90', critica:false, area:'Captación',                tarea:'Anotar cuántos prospectos preguntan y cuántos agendan.', responsable:'Cristina y Andrés', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:31, fase:'90', critica:false, area:'Procesos',                 tarea:'Ubicar en qué punto se acumulan los pacientes y resolverlo.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:32, fase:'90', critica:false, area:'Información',              tarea:'Decidir con datos las compras de equipo, precios y contrataciones.', responsable:'Fernando', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:33, fase:'90', critica:false, area:'Dependencia del dueño',    tarea:'Preparar a otro profesional y a una persona que pueda vender paquetes.', responsable:'Fernando', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:34, fase:'90', critica:false, area:'Dependencia del dueño',    tarea:'Que otros terapeutas atiendan y se den a conocer, no solo Fernando.', responsable:'Fernando', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:35, fase:'90', critica:false, area:'Dependencia del dueño',    tarea:'Formalizar el puesto de coordinación de Paula (autoridad y metas).', responsable:'Fernando', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:36, fase:'90', critica:false, area:'Captación',                tarea:'Preguntar y anotar siempre de dónde llegó cada paciente.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:37, fase:'90', critica:false, area:'Equipo',                   tarea:'Dejar acuerdos por escrito en las reuniones y revisar su avance.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:38, fase:'90', critica:false, area:'Caja',                     tarea:'Usar recibos con folio consecutivo.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:39, fase:'90', critica:false, area:'Inventario',               tarea:'Que el inventario se descuente con cada tratamiento.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:40, fase:'90', critica:false, area:'Inventario',               tarea:'Explicar cada diferencia entre conteo y registro.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:41, fase:'90', critica:false, area:'Información',              tarea:'Usar el margen por tratamiento para decidir precios y promociones.', responsable:'Fernando y Saúl', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:42, fase:'90', critica:false, area:'Tecnología',               tarea:'Evaluar conectar agenda, cobro e inventario en un solo sistema.', responsable:'Saúl', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:43, fase:'90', critica:false, area:'Dependencia del dueño',    tarea:'Revisar el plan de la clínica cada trimestre.', responsable:'Fernando y Saúl', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:44, fase:'90', critica:false, area:'Agenda',                   tarea:'Activar recordatorios automáticos y un reporte mensual de citas.', responsable:'Cristina y Andrés', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:45, fase:'90', critica:false, area:'Agenda',                   tarea:'Registrar quién confirmó cada cita y revisarlo cada semana.', responsable:'Paula', fecha:'', estado:'Pendiente'},
+        {id:uid(), numero:46, fase:'90', critica:false, area:'Atención al paciente',     tarea:'Revisar cada mes los resultados de satisfacción y actuar sobre las quejas.', responsable:'Paula', fecha:'', estado:'Pendiente'}
+      ],
       pdfEnlace: ''
     },
 
     /* ======================= EVALUACIÓN DEL EQUIPO ======================= */
+    /* Montos y lecturas actualizados con el Check-up de Procesos (21 oct 2026) — sustituyen al levantamiento inicial. */
+    evaluacionEquipoResumen: {
+      costoEquipoInterno: '$28,100 al mes ≈ 28% de la venta',
+      costoExternos: '$4,200 al mes (contador y consultoría)',
+      lectura: 'Con estos datos, no hay evidencia de que algún terapeuta sea "no rentable": Daniel, Maribel y Marco generan, según sesiones y precio por sesión capturados ($800), entre 3.2 y 4.9 veces lo que cuestan. El aporte de Paula, Cristina, Andrés y el contador es indirecto; se miden por cumplimiento y por cuánto trabajo le quitan a Fernando, no por ventas.',
+      dondeTrabajar: 'Maribel y Marco necesitan a Fernando para casi todo (cobrar, agendar, vender); Daniel lo necesita para venta y cierre. El contador cumple de forma regular y Fernando tiene que pedirle todo.'
+    },
     evaluacionEquipo: [
-      {id:uid(), nombre:'Daniel', costo:'$10,000 MXN', funcion:'', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$10,000 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:''},
-      {id:uid(), nombre:'Maribel', costo:'$5,000 MXN', funcion:'', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$5,000 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:''},
-      {id:uid(), nombre:'Marco', costo:'$4,100 MXN', funcion:'', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$4,100 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:''},
-      {id:uid(), nombre:'Cristina y Andrés (conjunto)', costo:'$2,000 MXN', funcion:'', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$2,000 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:'Pendiente confirmar distribución individual entre Cristina y Andrés.'},
-      {id:uid(), nombre:'Paula', costo:'$5,000 MXN', funcion:'', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$5,000 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:'Pendiente confirmar si es esposa de Fernando y su modalidad de contratación.'},
-      {id:uid(), nombre:'Contador', costo:'$1,160 MXN', funcion:'Contabilidad', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$1,160 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:''},
-      {id:uid(), nombre:'Consultoría de Saúl', costo:'$3,000 MXN', funcion:'Consultoría de Arquitectura Patrimonial', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$3,000 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:''}
+      {id:uid(), nombre:'Daniel', costo:'$10,000 MXN', funcion:'', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$10,000 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:'', lectura:'Genera entre 3.2 y 4.9 veces lo que cuesta, según sesiones y precio por sesión capturado ($800). Sin evidencia de no ser rentable.'},
+      {id:uid(), nombre:'Maribel', costo:'$5,000 MXN', funcion:'', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$5,000 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'Necesita a Fernando para casi todo (cobrar, agendar, vender).', infoFaltante:'', lectura:'Genera entre 3.2 y 4.9 veces lo que cuesta, según sesiones y precio por sesión capturado ($800). Sin evidencia de no ser rentable.'},
+      {id:uid(), nombre:'Marco', costo:'$4,100 MXN', funcion:'', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$4,100 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'Necesita a Fernando para casi todo (cobrar, agendar, vender).', infoFaltante:'', lectura:'Genera entre 3.2 y 4.9 veces lo que cuesta, según sesiones y precio por sesión capturado ($800). Sin evidencia de no ser rentable.'},
+      {id:uid(), nombre:'Cristina y Andrés (conjunto)', costo:'$2,000 MXN', funcion:'', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$2,000 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:'Pendiente confirmar distribución individual entre Cristina y Andrés.', lectura:'Su aporte es indirecto; se mide por cumplimiento y por cuánto trabajo le quitan a Fernando, no por ventas.'},
+      {id:uid(), nombre:'Paula', costo:'$5,000 MXN', funcion:'', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$5,000 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:'Pendiente confirmar si es esposa de Fernando y su modalidad de contratación.', lectura:'Su aporte es indirecto; se mide por cumplimiento y por cuánto trabajo le quita a Fernando, no por ventas.'},
+      {id:uid(), nombre:'Contador', costo:'$1,160 MXN', funcion:'Contabilidad', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$1,160 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:'', lectura:'Su aporte es indirecto. Cumple de forma regular, pero Fernando tiene que pedirle todo.'},
+      {id:uid(), nombre:'Consultoría de Saúl', costo:'$3,000 MXN', funcion:'Consultoría de Arquitectura Patrimonial', responsabilidades:'', diasHoras:'', capacidad:'', tareasRealizadas:'', resultadosEsperados:'', resultadosObservados:'', cancelaciones:'', indicadores:'', costosAtribuibles:'$3,000 MXN/mes', ingresosAtribuibles:'', dependenciasRiesgos:'', infoFaltante:'', lectura:'Su aporte es indirecto; se mide por cumplimiento, no por ventas.'}
     ],
 
     /* ======================= DIAGNÓSTICO FINANCIERO (nov 2026) ======================= */
@@ -1760,6 +1899,31 @@ Se cuenta con una fotografía inicial clara de ingresos, estructura de personal,
       ],
       pdfEnlace: ''
     },
+
+    /* ======================= DIAGNÓSTICO DE PROCESOS (sección propia — 21 oct 2026) =======================
+       Narrativa y números clave del Check-up de Procesos. El detalle por área y la ruta de trabajo viven
+       en checkupOperativo (arriba) y se muestran también aquí para no duplicar los datos. */
+    diagnosticoProcesos: {
+      cliente: 'Juan Fernando Tapias Álvarez · Clínica de fisioterapia y rehabilitación',
+      fechaVisita: '21 de octubre de 2026',
+      fechaAprobacion: 'Aprobado por el cliente: noviembre 2026',
+      metodo: 'Check-up Operativo de Elementos Financieros (10 áreas, 53 preguntas calificadas, escala 1 a 4)',
+      escala: '1 Inexistente · 2 Informal · 3 Documentado · 4 Medido',
+      numerosClave: [
+        {etiqueta:'Inasistencias', valor:'16 de 117 citas al mes = 14%', nota:''},
+        {etiqueta:'Costo por paciente nuevo', valor:'$150', nota:'(publicidad $3,000 ÷ 20 pacientes nuevos). Supone que todos los nuevos vienen de publicidad; en realidad 80% llega por recomendación.'},
+        {etiqueta:'Publicidad sobre la venta', valor:'3% de la venta mensual', nota:''},
+        {etiqueta:'Ingreso en riesgo si Fernando falta 2 semanas', valor:'$35,000', nota:'(supuesto: la clínica sigue con otros profesionales y se pierde ~35% del mes)'},
+        {etiqueta:'Mezcla de cobro', valor:'Tarjeta 58.5% · Transferencia 23.3% · Efectivo 18.2%', nota:''},
+        {etiqueta:'Origen de pacientes', valor:'Recomendación 80% · Instagram 10% · Facebook 5% · TikTok 5%', nota:''}
+      ],
+      numerosClaveNota: 'Cálculos hechos con venta de $100,000 (límite bajo del rango declarado de $100,000 a $105,000). Pendiente de confirmar: el costo de las inasistencias. Con un ticket de $4,500 saldría $72,000 al mes, pero ese monto parece ser el de un paquete, no el de una sesión. Si cada cita perdida vale una sesión de $800, el costo real es cerca de $12,800 al mes. Mostrar como "por confirmar en el diagnóstico financiero".',
+      siguientesPasos: 'Diagnóstico Financiero: martes. Confirmará el costo real de las inasistencias, los gastos sin explicar y el pago de Fernando. Diagnóstico Fiscal: después del financiero. Cada diagnóstico nuevo se agrega como sección aparte en esta plataforma, con su propia ruta de trabajo.',
+      notaPie: 'Elementos Financieros · Las cifras marcadas como ESTIMADO salen de lo que el cliente declaró y no son auditadas.'
+    },
+
+    /* Bandera de migraciones de datos ya guardados (en la nube o en este dispositivo) — evita repetir o perder cambios ya hechos por Fernando, Paula o Saúl. */
+    migraciones: {},
 
     /* ======================= HITOS (no son fases nuevas) ======================= */
     hitos: {
@@ -1910,11 +2074,54 @@ function migrateSesiones(def, parsedSesiones){
   return sesiones;
 }
 
+/* Inyecta una sola vez el Diagnóstico de Procesos (áreas reales, ruta de trabajo de 46 tareas, lecturas de
+   Evaluación del Equipo y cierre de la Sesión 02) en datos que ya estaban guardados — en la nube o en este
+   dispositivo — con las 9 áreas genéricas y los montos del levantamiento inicial. Se controla con una bandera
+   (migraciones.diagnosticoProcesos) para que, una vez aplicada, nunca se repita ni sobrescriba lo que Fernando,
+   Paula o Saúl capturen después (ventas, gastos, estados de tareas, etc. siguen su propio merge normal). */
+function migrateDiagnosticoProcesos(def, merged){
+  if(merged.migraciones && merged.migraciones.diagnosticoProcesos) return merged;
+  merged.checkupOperativo.estado = def.checkupOperativo.estado;
+  merged.checkupOperativo.fechaAplicacion = def.checkupOperativo.fechaAplicacion;
+  merged.checkupOperativo.fechaAprobacion = def.checkupOperativo.fechaAprobacion;
+  merged.checkupOperativo.metodo = def.checkupOperativo.metodo;
+  merged.checkupOperativo.escala = def.checkupOperativo.escala;
+  merged.checkupOperativo.nivelActual = def.checkupOperativo.nivelActual;
+  merged.checkupOperativo.nivelActualEtiqueta = def.checkupOperativo.nivelActualEtiqueta;
+  merged.checkupOperativo.meta90 = def.checkupOperativo.meta90;
+  merged.checkupOperativo.meta90Etiqueta = def.checkupOperativo.meta90Etiqueta;
+  merged.checkupOperativo.riesgoGeneral = def.checkupOperativo.riesgoGeneral;
+  merged.checkupOperativo.riesgoResumen = def.checkupOperativo.riesgoResumen;
+  merged.checkupOperativo.lecturaBreve = def.checkupOperativo.lecturaBreve;
+  merged.checkupOperativo.areasMadurez = JSON.parse(JSON.stringify(def.checkupOperativo.areasMadurez));
+  if(!Array.isArray(merged.checkupOperativo.rutaTrabajo) || !merged.checkupOperativo.rutaTrabajo.length){
+    merged.checkupOperativo.rutaTrabajo = JSON.parse(JSON.stringify(def.checkupOperativo.rutaTrabajo));
+  }
+  merged.evaluacionEquipoResumen = Object.assign({}, def.evaluacionEquipoResumen, merged.evaluacionEquipoResumen||{});
+  (merged.evaluacionEquipo||[]).forEach(p=>{
+    const base = def.evaluacionEquipo.find(d=>d.nombre===p.nombre);
+    if(base && !p.lectura) p.lectura = base.lectura;
+  });
+  merged.diagnosticoProcesos = JSON.parse(JSON.stringify(def.diagnosticoProcesos));
+  const ses = (merged.sesiones||[]).find(s=>s.slug==='checkup-equipo');
+  if(ses){
+    ses.estado = 'Completada';
+    if(!ses.analisis || !ses.analisis.trim()){
+      ses.analisis = 'NIVEL GENERAL: 2.4 de 4 · Informal. Meta a 90 días: 3.1 · Documentado. Riesgo general: Alto (2 áreas en riesgo alto, 6 en medio y 2 en bajo; ningún control crítico quedó en nivel 1).\n\n'
+        + 'LECTURA: Lo más fuerte de la clínica es que Fernando conoce sus números y su agenda. Lo más débil es cómo se consiguen y se recuperan pacientes, y que los tratamientos y el paso del paciente por la clínica no están escritos. Por eso la clínica todavía depende mucho de Fernando.\n\n'
+        + 'EQUIPO: con los datos capturados (sesiones y precio de $800), no hay evidencia de que algún terapeuta sea "no rentable" — Daniel, Maribel y Marco generan entre 3.2 y 4.9 veces lo que cuestan. El aporte de Paula, Cristina, Andrés y el contador es indirecto.\n\n'
+        + 'El diagnóstico completo, con las 10 áreas evaluadas, los números clave y la ruta de trabajo de 46 tareas (30/60/90 días), está disponible en la sección "Diagnóstico de Procesos" y en el módulo Check-up Operativo, en Negocio.';
+    }
+  }
+  merged.migraciones = Object.assign({}, merged.migraciones, { diagnosticoProcesos: true });
+  return merged;
+}
+
 function loadState(){
   const def = defaultState();
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return def;
+    if(!raw){ const d = JSON.parse(JSON.stringify(def)); d.migraciones = Object.assign({}, d.migraciones, {diagnosticoProcesos:true}); return d; }
     const parsed = JSON.parse(raw);
     const merged = Object.assign({}, def, parsed);
     merged.cliente = Object.assign({}, def.cliente, parsed.cliente||{});
@@ -1957,11 +2164,18 @@ function loadState(){
     merged.sesiones = migrateSesiones(def, parsed.sesiones);
     if(!merged.construyendo || !Array.isArray(merged.construyendo) || merged.construyendo.length===0) merged.construyendo = parsed.construyendo || def.construyendo;
     if(Array.isArray(merged.fases)) merged.fases.forEach(f=>{ if(f.progreso==null) f.progreso=0; if(f.criterioCierre==null) f.criterioCierre=''; });
-    return merged;
+    merged.evaluacionEquipoResumen = Object.assign({}, def.evaluacionEquipoResumen, parsed.evaluacionEquipoResumen||{});
+    merged.diagnosticoProcesos = Object.assign({}, def.diagnosticoProcesos, parsed.diagnosticoProcesos||{});
+    merged.migraciones = Object.assign({}, parsed.migraciones||{});
+    return migrateDiagnosticoProcesos(def, merged);
   }catch(e){ console.warn('No se pudo cargar el estado guardado, usando valores por defecto.', e); return def; }
 }
 
 let state = loadState();
+/* Si loadState() acaba de migrar datos guardados (p. ej. el Diagnóstico de Procesos sobre una
+   plataforma que ya tenía información real capturada), se persiste de inmediato — sin esperar a que
+   alguien edite algo o a que la nube responda — para no depender únicamente de la conexión. */
+try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){ console.error('No se pudo guardar en LocalStorage', e); }
 let saveTimer = null;
 function saveState(){
   clearTimeout(saveTimer);
@@ -3529,12 +3743,24 @@ function renderCheckupOperativo(){
     node.oninput = ()=>{ item.respuesta = node.value; saveState(); };
   });
 
+  const resumen = $('#checkupResumenGeneral');
+  if(resumen){
+    resumen.innerHTML = `
+      <div class="card summary-card"><div class="tt">Nivel actual</div><div class="tx" style="font-family:var(--mono); font-size:18px; font-weight:800; color:var(--white);">${esc(c.nivelActual!=null?c.nivelActual:'—')} de 4 · ${esc(c.nivelActualEtiqueta||'')}</div></div>
+      <div class="card summary-card"><div class="tt">Meta a 90 días</div><div class="tx" style="font-family:var(--mono); font-size:18px; font-weight:800; color:var(--gold);">${esc(c.meta90!=null?c.meta90:'—')} de 4 · ${esc(c.meta90Etiqueta||'')}</div></div>
+    `;
+  }
+
   const areasGrid = $('#checkupAreasGrid');
   areasGrid.innerHTML = c.areasMadurez.map(a=>`
-    <div class="card kpi5-card">
-      <div class="nm">${esc(a.area)}</div>
-      <select class="sel" data-area="${a.id}" style="margin-top:6px;">${NIVELES_MADUREZ.map(n=>`<option value="${n}" ${a.nivel===n?'selected':''}>${n||'Sin evaluar'}</option>`).join('')}</select>
-    </div>
+    <tr>
+      <td>${esc(a.area)}</td>
+      <td style="font-family:var(--mono);">${a.nivelHoy!=null?esc(a.nivelHoy):'—'}</td>
+      <td><select class="sel" data-area="${a.id}" style="width:auto;">${NIVELES_MADUREZ.map(n=>`<option value="${n}" ${a.nivel===n?'selected':''}>${n||'Sin evaluar'}</option>`).join('')}</select></td>
+      <td><span class="pill ${riesgoTone(a.riesgo)}">${esc(a.riesgo||'—')}</span></td>
+      <td>${esc(a.impacto||'—')}</td>
+      <td style="font-family:var(--mono);">${a.meta90!=null?esc(a.meta90):'—'}</td>
+    </tr>
   `).join('');
   areasGrid.querySelectorAll('[data-area]').forEach(sel=>{
     const item = c.areasMadurez.find(a=>a.id===sel.dataset.area);
@@ -3544,14 +3770,89 @@ function renderCheckupOperativo(){
   renderListaSimple('#checkupHallazgosList', c.hallazgos, 'addCheckupHallazgo', c.hallazgos, 'Sin hallazgos registrados todavía.');
   renderListaSimple('#checkupRiesgosList', c.riesgos, 'addCheckupRiesgo', c.riesgos, 'Sin riesgos registrados todavía.');
 
-  $('#checkup30').value = c.plan306090.dias30; $('#checkup30').oninput = e=>{ c.plan306090.dias30=e.target.value; saveState(); };
-  $('#checkup60').value = c.plan306090.dias60; $('#checkup60').oninput = e=>{ c.plan306090.dias60=e.target.value; saveState(); };
-  $('#checkup90').value = c.plan306090.dias90; $('#checkup90').oninput = e=>{ c.plan306090.dias90=e.target.value; saveState(); };
+  const ruta = Array.isArray(c.rutaTrabajo) ? c.rutaTrabajo : [];
+  const hechas = ruta.filter(t=>t.estado==='Hecho').length;
+  const progEl = $('#checkupRutaProgreso');
+  if(progEl) progEl.textContent = ruta.length ? `${hechas}/${ruta.length} tareas completadas` : '';
+  const rutaBody = $('#checkupRutaBody');
+  if(rutaBody){
+    const grupos = [['30','Primeros 30 días — lo urgente'], ['60','Días 31 a 60 — ordenar'], ['90','Días 61 a 90 — controlar y medir']];
+    rutaBody.innerHTML = grupos.map(([fase,titulo])=>{
+      const rows = ruta.filter(t=>t.fase===fase);
+      if(!rows.length) return '';
+      return `<tr><td colspan="6" style="background:var(--bg-3); font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--gray-2); font-weight:700;">${esc(titulo)}</td></tr>`
+        + rows.map(t=>`
+          <tr>
+            <td style="font-family:var(--mono);">${t.critica?'⚑ ':''}${String(t.numero).padStart(2,'0')}</td>
+            <td>${esc(t.area)}</td>
+            <td style="min-width:260px;">${esc(t.tarea)}</td>
+            <td><input type="text" data-tarea="${t.id}" data-f="responsable" value="${esc(t.responsable)}" style="width:140px;"></td>
+            <td><input type="date" data-tarea="${t.id}" data-f="fecha" value="${esc(t.fecha)}"></td>
+            <td><select class="sel" data-tarea="${t.id}" data-f="estado" style="width:auto;">${TAREA_ESTADOS.map(e=>`<option ${t.estado===e?'selected':''}>${e}</option>`).join('')}</select></td>
+          </tr>
+        `).join('');
+    }).join('');
+    rutaBody.querySelectorAll('[data-tarea]').forEach(node=>{
+      const item = ruta.find(t=>t.id===node.dataset.tarea);
+      const ev = node.tagName==='SELECT' ? 'onchange' : 'oninput';
+      node[ev] = ()=>{ item[node.dataset.f]=node.value; saveState(); if(node.dataset.f==='estado') renderCheckupOperativo(); };
+    });
+  }
 }
 $onload(()=>{
   $('#addCheckupHallazgo').onclick = ()=>{ state.checkupOperativo.hallazgos.push({id:uid(),texto:''}); saveState(); renderCheckupOperativo(); };
   $('#addCheckupRiesgo').onclick = ()=>{ state.checkupOperativo.riesgos.push({id:uid(),texto:''}); saveState(); renderCheckupOperativo(); };
 });
+
+/* ==========================================================================
+   DIAGNÓSTICO DE PROCESOS (sección propia — narrativa y números clave)
+   ========================================================================== */
+function renderDiagnosticoProcesos(){
+  const dp = state.diagnosticoProcesos; const c = state.checkupOperativo;
+  if(!dp || !c) return;
+  $('#dpFechaVisita').textContent = dp.fechaVisita || '—';
+  $('#dpFechaAprobacion').textContent = dp.fechaAprobacion || '';
+  $('#dpNivelActual').textContent = (c.nivelActual!=null ? c.nivelActual : '—') + ' de 4 · ' + (c.nivelActualEtiqueta||'');
+  $('#dpMeta90').textContent = (c.meta90!=null ? c.meta90 : '—') + ' de 4 · ' + (c.meta90Etiqueta||'');
+  const pill = $('#dpRiesgoPill'); if(pill){ pill.className = 'pill ' + riesgoTone(c.riesgoGeneral); pill.textContent = c.riesgoGeneral || '—'; }
+  $('#dpRiesgoResumen').textContent = c.riesgoResumen || '';
+  $('#dpLecturaBreve').textContent = c.lecturaBreve || '';
+
+  const nkList = $('#dpNumerosClaveList');
+  if(nkList){
+    nkList.innerHTML = (dp.numerosClave||[]).map(n=>`
+      <div class="card entry-card" style="padding:12px 14px;">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--gray-2); font-weight:700; margin-bottom:4px;">${esc(n.etiqueta)}</div>
+        <div style="font-family:var(--mono); font-size:16px; font-weight:800; color:var(--white);">${esc(n.valor)}</div>
+        ${n.nota ? `<div style="font-size:11.5px; color:var(--gray-2); margin-top:4px;">${esc(n.nota)}</div>` : ''}
+      </div>
+    `).join('');
+  }
+  $('#dpNumerosClaveNota').textContent = dp.numerosClaveNota || '';
+
+  const dpAreas = $('#dpAreasGrid');
+  if(dpAreas){
+    dpAreas.innerHTML = c.areasMadurez.map(a=>`
+      <tr>
+        <td>${esc(a.area)}</td>
+        <td style="font-family:var(--mono);">${a.nivelHoy!=null?esc(a.nivelHoy):'—'}</td>
+        <td>${esc(a.nivel||'—')}</td>
+        <td><span class="pill ${riesgoTone(a.riesgo)}">${esc(a.riesgo||'—')}</span></td>
+        <td>${esc(a.impacto||'—')}</td>
+        <td style="font-family:var(--mono);">${a.meta90!=null?esc(a.meta90):'—'}</td>
+      </tr>
+    `).join('');
+  }
+
+  const er = state.evaluacionEquipoResumen || {};
+  $('#dpCostoInterno').textContent = er.costoEquipoInterno || '—';
+  $('#dpCostoExternos').textContent = er.costoExternos || '—';
+  $('#dpLecturaEquipo').textContent = er.lectura || '';
+  $('#dpDondeTrabajar').textContent = er.dondeTrabajar ? ('Dónde trabajar: ' + er.dondeTrabajar) : '';
+
+  $('#dpSiguientesPasos').textContent = dp.siguientesPasos || '';
+  $('#dpNotaPie').textContent = dp.notaPie || '';
+}
 
 /* ==========================================================================
    EVALUACIÓN DEL EQUIPO
@@ -3564,12 +3865,19 @@ const EVAL_EQUIPO_FIELDS = [
 ];
 function renderEvaluacionEquipo(){
   const list = $('#evaluacionEquipoList'); if(!list) return;
+  const er = state.evaluacionEquipoResumen || {};
+  const rInterno = $('#eqResumenInterno'); if(rInterno) rInterno.textContent = er.costoEquipoInterno || '—';
+  const rExterno = $('#eqResumenExternos'); if(rExterno) rExterno.textContent = er.costoExternos || '—';
+  const rLectura = $('#eqResumenLectura'); if(rLectura) rLectura.textContent = er.lectura || '';
+  const rDonde = $('#eqResumenDonde'); if(rDonde) rDonde.textContent = er.dondeTrabajar ? ('Dónde trabajar: ' + er.dondeTrabajar) : '';
+
   list.innerHTML = state.evaluacionEquipo.map(p=>`
     <div class="card entry-card">
       <div class="entry-top">
         <span class="entry-badge" style="font-size:13px; font-weight:700; color:var(--white);">${esc(p.nombre)}</span>
         <span class="pill t-neutral">${esc(p.costo)}</span>
       </div>
+      ${p.lectura ? `<div style="font-size:12.5px; color:var(--gray-1); background:var(--bg-3); border-radius:8px; padding:9px 11px; margin-bottom:10px;">${esc(p.lectura)}</div>` : ''}
       <div class="field" style="margin-bottom:10px;"><label>Costo atribuible</label><input type="text" data-eq="${p.id}" data-f="costosAtribuibles" value="${esc(p.costosAtribuibles)}"></div>
       <div class="grid-2" style="gap:10px;">
         ${EVAL_EQUIPO_FIELDS.map(([key,label])=>`<div class="field"><label>${esc(label)}</label><textarea data-eq="${p.id}" data-f="${key}" rows="2" placeholder="Información pendiente">${esc(p[key]||'')}</textarea></div>`).join('')}
@@ -4531,6 +4839,10 @@ function applyImportedState(jsonStr){
   state.sesiones = migrateSesiones(def, parsed.sesiones);
   state.construyendo = (parsed.construyendo && parsed.construyendo.length) ? parsed.construyendo : def.construyendo;
   if(Array.isArray(state.fases)) state.fases.forEach(f=>{ if(f.progreso==null) f.progreso=0; if(f.criterioCierre==null) f.criterioCierre=''; });
+  state.evaluacionEquipoResumen = Object.assign({}, def.evaluacionEquipoResumen, parsed.evaluacionEquipoResumen||{});
+  state.diagnosticoProcesos = Object.assign({}, def.diagnosticoProcesos, parsed.diagnosticoProcesos||{});
+  state.migraciones = Object.assign({}, parsed.migraciones||{});
+  state = migrateDiagnosticoProcesos(def, state);
   saveState();
   renderAll();
 }
@@ -4637,6 +4949,7 @@ function renderAll(){
   safeRun('renderGastosRegistro', renderGastosRegistro);
   safeRun('renderVentas', renderVentas);
   safeRun('renderCheckupOperativo', renderCheckupOperativo);
+  safeRun('renderDiagnosticoProcesos', renderDiagnosticoProcesos);
   safeRun('renderEvaluacionEquipo', renderEvaluacionEquipo);
   safeRun('renderDiagnosticoFinanciero', renderDiagnosticoFinanciero);
   safeRun('renderHitos', renderHitos);
