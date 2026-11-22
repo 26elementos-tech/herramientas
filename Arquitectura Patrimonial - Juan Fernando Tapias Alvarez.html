@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Arquitectura Patrimonial · Juan Fernando Tapias Álvarez</title>
+<script>try{var __t=localStorage.getItem("apd_tema");document.documentElement.setAttribute("data-theme",__t==="oscuro"?"oscuro":"claro");}catch(e){document.documentElement.setAttribute("data-theme","claro");}</script>
 <style>
 :root{
   --bg:            #05070d;
@@ -153,6 +154,57 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .btn-sm.primary{ background:var(--gold); border-color:var(--gold); color:#14110a; font-weight:700; }
 .btn-sm.primary:hover{ filter:brightness(1.1); }
 .btn-sm.danger:hover{ border-color:var(--red); color:var(--red); }
+
+
+/* ===== Tema claro (por defecto). El tema oscuro y dorado original sigue disponible con el interruptor del menú. ===== */
+html[data-theme="claro"]{
+  --bg:#f3f7f6; --bg-1:#edf3f1; --bg-2:#ffffff; --bg-3:#e4eeeb; --panel:#ffffff;
+  --hairline:rgba(20,60,70,.10); --hairline-2:rgba(20,60,70,.18);
+  --blue:#2f6fd6; --blue-soft:#2a5db3; --blue-dim:rgba(47,111,214,.12); --blue-glow:rgba(47,111,214,.25);
+  --gold:#0f9488; --gold-soft:#0b7a70; --gold-deep:#0a5d55; --gold-dim:rgba(15,148,136,.12); --gold-glow:rgba(15,148,136,.28);
+  --white:#16323a; --gray-1:#40565d; --gray-2:#5d737a; --gray-3:#8a9ca1;
+  --green:#178a57; --green-bg:rgba(23,138,87,.12); --amber:#a96a0c; --amber-bg:rgba(214,158,46,.18);
+  --red:#d03e3e; --red-bg:rgba(208,62,62,.10);
+  --shadow-2:0 10px 24px -16px rgba(20,60,70,.28);
+}
+html[data-theme="claro"] body{ background-image:radial-gradient(900px 480px at 82% -8%, rgba(15,148,136,.08), transparent 60%); }
+html[data-theme="claro"] .btn-sm.primary{ color:#fff; }
+html[data-theme="claro"] .brand-mark{ color:#fff; background:linear-gradient(135deg,#17a99b,#0b7a70); }
+html[data-theme="claro"] .gantt-bar, html[data-theme="claro"] .gantt-bar.est-encurso{ color:#fff; }
+html[data-theme="claro"] .card, html[data-theme="claro"] .module .table-wrap{ box-shadow:0 1px 2px rgba(20,60,70,.05); }
+
+/* ===== Pestañas de Negocio, Ruta de trabajo, Inventario por categoría ===== */
+.ntab-pane{ display:none; } .ntab-pane.active{ display:block; animation:viewIn .3s var(--ease); }
+.rt-bar{ height:9px; border-radius:99px; background:var(--bg-3); overflow:hidden; }
+.rt-bar>i{ display:block; height:100%; border-radius:99px; background:var(--gold); transition:width .4s var(--ease); }
+.rt-fases{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:14px; }
+.rt-fase{ border:1px solid var(--hairline); border-radius:var(--r-md); padding:11px 13px; background:var(--bg-2); }
+.rt-fase .t{ font-size:10px; text-transform:uppercase; letter-spacing:.07em; color:var(--gray-3); margin-bottom:4px; }
+.rt-fase .n{ font-family:var(--mono); font-weight:800; font-size:15px; color:var(--white); margin-bottom:7px; }
+.rt-task{ padding:13px 15px; display:flex; gap:12px; align-items:flex-start; }
+.rt-task.hecho .rt-text{ text-decoration:line-through; color:var(--gray-2); }
+.rt-task.hecho{ opacity:.72; }
+.rt-check{ flex:0 0 auto; width:26px; height:26px; border-radius:50%; border:2px solid var(--hairline-2); background:var(--bg); color:transparent; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; margin-top:1px; }
+.rt-check:hover{ border-color:var(--gold); }
+.rt-task.hecho .rt-check{ background:var(--green); border-color:var(--green); color:#fff; }
+.rt-main{ flex:1; min-width:0; }
+.rt-top{ display:flex; flex-wrap:wrap; gap:7px; align-items:center; margin-bottom:5px; }
+.rt-num{ font-family:var(--mono); font-weight:800; font-size:12px; color:var(--gold-soft); }
+.rt-text{ font-size:13.5px; color:var(--white); line-height:1.45; margin-bottom:9px; }
+.rt-fields{ display:flex; flex-wrap:wrap; gap:8px; }
+.rt-fields select, .rt-fields input{ background:var(--bg); border:1px solid var(--hairline-2); border-radius:8px; padding:6px 9px; font-size:12px; color:var(--white); }
+.rt-fields input[type=text]{ width:140px; }
+.rt-grupo{ font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--gray-2); font-weight:700; margin:18px 0 8px; }
+.inv-grupo{ border:1px solid var(--hairline); border-radius:var(--r-lg); background:var(--panel); padding:0 16px; margin-bottom:10px; }
+.inv-grupo>summary{ cursor:pointer; list-style:none; padding:14px 0; display:flex; justify-content:space-between; gap:6px 14px; flex-wrap:wrap; align-items:center; }
+.inv-grupo>summary::-webkit-details-marker{ display:none; }
+.inv-grupo[open]>summary{ border-bottom:1px solid var(--hairline); }
+.inv-g-n{ font-weight:700; color:var(--white); font-size:13.5px; }
+.inv-g-n::before{ content:'▸'; color:var(--gold); margin-right:8px; }
+.inv-grupo[open] .inv-g-n::before{ content:'▾'; }
+.inv-g-s{ font-size:11.5px; color:var(--gray-2); font-family:var(--mono); }
+.inv-grupo .add-row-btn{ margin:0 0 14px; }
+@media print{ .ntab-pane{ display:block !important; } }
 
 /* subnav pills */
 .subnav{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
@@ -481,6 +533,7 @@ table.data-table td.del-cell{ text-align:center; }
     <nav class="nav" id="navList">
       <div class="nav-group-label">Vista ejecutiva · se actualiza siempre</div>
       <button data-view="portada" class="active"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>Portada</button>
+      <button data-view="ruta"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h9"/></svg></span>Ruta de trabajo</button>
       <button data-view="negocio"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></span>Negocio</button>
       <button data-view="flujo"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h10M14 12l-3-3M14 12l-3 3M14 6h6M14 18h6"/></svg></span>Flujo</button>
       <button data-view="fernandopaula"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.6"/><path d="M3 21v-1a6 6 0 0112 0v1M14 21v-1a5 5 0 017.5-4.3"/></svg></span>Fernando + Paula</button>
@@ -494,7 +547,7 @@ table.data-table td.del-cell{ text-align:center; }
       <button data-view="control"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></span>Configuración</button>
     </nav>
 
-    <div class="sidebar-foot"><div class="clock" id="sidebarClock">—</div></div>
+    <div class="sidebar-foot"><button class="btn-sm" id="btnTema" style="width:100%; margin-bottom:8px;">◐ Tema</button><div class="clock" id="sidebarClock">—</div></div>
   </aside>
 
   <main class="content">
@@ -511,6 +564,13 @@ table.data-table td.del-cell{ text-align:center; }
           <div class="portada-meta"><span class="k">Profesión</span><span class="v"><input type="text" id="p_profesion" style="width:150px;"></span></div>
           <div class="portada-meta"><span class="k">Estado del proyecto</span><span class="v"><input type="text" id="p_estadoProyecto" style="width:120px;"></span></div>
         </div>
+      </div>
+
+      <div class="module" id="portadaTocaModule">
+        <div class="module-title">Lo que toca hacer ahora</div>
+        <div class="card" style="padding:16px 18px; margin-bottom:12px;" id="ptResumen"></div>
+        <div class="stack" id="ptLista"></div>
+        <button class="add-row-btn" id="ptVerRuta" style="margin-top:10px;">Ver toda la ruta de trabajo →</button>
       </div>
 
       <div class="avance-spotlight card">
@@ -641,16 +701,56 @@ table.data-table td.del-cell{ text-align:center; }
       </div>
     </section>
 
+    <!-- ======================= RUTA DE TRABAJO (Check-up Operativo) ======================= -->
+    <section class="view" id="view-ruta">
+      <div class="view-head"><h1>Ruta de Trabajo</h1><span class="view-count">Check-up Operativo · 30 / 60 / 90 días</span></div>
+
+      <div class="module">
+        <div class="module-title">Avance</div>
+        <div class="card" style="padding:18px 20px;" id="rtResumen"></div>
+      </div>
+
+      <div class="module">
+        <div class="module-title">Lo que toca ahora</div>
+        <div class="module-desc">Primero lo que ya está en proceso, y después lo más urgente que falta, empezando por los controles críticos (⚑).</div>
+        <div class="stack" id="rtAhora"></div>
+      </div>
+
+      <div class="module">
+        <div class="module-title">Todas las tareas</div>
+        <div class="subnav" id="rtFases">
+          <button data-rtf="todas" class="active">Todas</button>
+          <button data-rtf="30">Primeros 30 días</button>
+          <button data-rtf="60">Días 31 a 60</button>
+          <button data-rtf="90">Días 61 a 90</button>
+          <button data-rtf="critica">Solo críticas ⚑</button>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:6px;">
+          <select class="sel" id="rtFEstado" style="width:auto;"></select>
+          <select class="sel" id="rtFArea" style="width:auto;"></select>
+          <span id="rtCuenta" style="font-size:11.5px; color:var(--gray-2); align-self:center;"></span>
+        </div>
+        <div id="rtLista"></div>
+      </div>
+    </section>
+
     <!-- ======================= 02 NEGOCIO (ejecutivo) ======================= -->
     <section class="view" id="view-negocio">
       <div class="view-head"><h1>Economía del Negocio</h1><span class="view-count">Fases 1–6 · Bloque I</span></div>
 
+      <div class="subnav" id="negTabs">
+        <button data-ntab="resumen" class="active">Resumen</button>
+        <button data-ntab="ventas">Ventas y gastos</button>
+        <button data-ntab="diag">Diagnósticos</button>
+        <button data-ntab="inventario">Inventario</button>
+      </div>
+
+      <div class="ntab-pane active" data-pane="resumen">
       <div class="module">
         <div class="module-title">Indicadores del Negocio</div>
         <div class="module-desc">Actual, anterior, meta y variación. "SIN DATOS" significa que todavía no se ha medido — nunca se rellena con un valor supuesto.</div>
         <div class="kpi5-grid" id="negEconGrid"></div>
       </div>
-
       <div class="module">
         <div class="module-title">Ingresos</div>
         <div class="card" style="padding:20px 22px;">
@@ -662,12 +762,28 @@ table.data-table td.del-cell{ text-align:center; }
           <div class="module-desc" style="margin:0;">Histórico mensual disponible en la gráfica de Portada (indicador "Ingresos").</div>
         </div>
       </div>
-
       <div class="module">
         <div class="module-title">Gastos</div>
         <div class="kpi5-grid" id="gastosSeparados"></div>
       </div>
+      <div class="module">
+        <div class="module-title">Servicios</div>
+        <div class="kpi5-grid" id="serviciosGrid"></div>
+      </div>
+      <div class="module">
+        <div class="module-title">Dependencia de Fernando</div>
+        <div class="card" style="padding:22px 24px;">
+          <p style="color:var(--gray-1); font-size:13px; margin-bottom:16px;">Qué porcentaje de la generación de ingresos depende directamente del trabajo de Fernando.</p>
+          <div class="grid-3">
+            <div class="snapshot-card card"><div class="k">Actual</div><div class="v" id="depActual">SIN DATOS</div></div>
+            <div class="snapshot-card card"><div class="k">Meta</div><div class="v" id="depMeta">SIN DATOS</div></div>
+            <div class="snapshot-card card"><div class="k">Variación</div><div class="v" id="depVar">SIN DATOS</div></div>
+          </div>
+        </div>
+      </div>
+      </div>
 
+      <div class="ntab-pane" data-pane="ventas">
       <div class="module" id="ventasModule">
         <div class="module-title">Corte de Ventas Diarias</div>
         <div class="module-desc">Cada venta se registra con su folio, forma de pago y descripción. El corte del día se calcula solo: total vendido, desglose por forma de pago y cuadre del efectivo en caja. Las ventas no se borran: si hay un error se <b>anulan</b> y el folio queda en el registro.</div>
@@ -726,7 +842,6 @@ table.data-table td.del-cell{ text-align:center; }
         </div>
         <div id="ventaMesResumen" style="font-size:12.5px; color:var(--gray-1); margin-bottom:6px;"></div>
       </div>
-
       <div class="module">
         <div class="module-title">Registro de Gastos</div>
         <div class="module-desc">Fernando captura aquí cada gasto del negocio, día por día, clasificado por categoría. Esto alimenta el resumen mensual por categoría de abajo.</div>
@@ -764,24 +879,9 @@ table.data-table td.del-cell{ text-align:center; }
           </table>
         </div>
       </div>
-
-      <div class="module">
-        <div class="module-title">Servicios</div>
-        <div class="kpi5-grid" id="serviciosGrid"></div>
       </div>
 
-      <div class="module">
-        <div class="module-title">Dependencia de Fernando</div>
-        <div class="card" style="padding:22px 24px;">
-          <p style="color:var(--gray-1); font-size:13px; margin-bottom:16px;">Qué porcentaje de la generación de ingresos depende directamente del trabajo de Fernando.</p>
-          <div class="grid-3">
-            <div class="snapshot-card card"><div class="k">Actual</div><div class="v" id="depActual">SIN DATOS</div></div>
-            <div class="snapshot-card card"><div class="k">Meta</div><div class="v" id="depMeta">SIN DATOS</div></div>
-            <div class="snapshot-card card"><div class="k">Variación</div><div class="v" id="depVar">SIN DATOS</div></div>
-          </div>
-        </div>
-      </div>
-
+      <div class="ntab-pane" data-pane="diag">
       <div class="module" id="diagnosticoProcesosModule">
         <div class="module-title">Diagnóstico de Procesos</div>
         <div class="module-desc">Check-up Operativo de Elementos Financieros — 10 áreas, 53 preguntas calificadas, escala 1 a 4. Visita: <span id="dpFechaVisita"></span> · <span id="dpFechaAprobacion"></span>.</div>
@@ -834,7 +934,6 @@ table.data-table td.del-cell{ text-align:center; }
         <p id="dpSiguientesPasos" style="font-size:13px; color:var(--gray-1); margin:0 0 10px;"></p>
         <p id="dpNotaPie" style="font-size:11px; color:var(--gray-2); margin:0;"></p>
       </div>
-
       <div class="module">
         <div class="module-title">Check-up Operativo</div>
         <div class="module-desc">Se aplica en la Plataforma Madre de Elementos Financieros. Aquí se registra el resultado una vez aplicado — no se reconstruye el cuestionario.</div>
@@ -873,16 +972,12 @@ table.data-table td.del-cell{ text-align:center; }
           </div>
         </div>
 
-        <div class="module-title" style="font-size:10px;">Ruta de Trabajo (marcable) · 30 / 60 / 90 días</div>
-        <div class="module-desc" style="margin-top:-6px;">⚑ = control crítico. Marca el estado, y edita responsable y fecha de cierre conforme avancen — se sincroniza igual que el resto del tablero. <span id="checkupRutaProgreso"></span></div>
-        <div class="table-wrap">
-          <table class="data-table" style="min-width:920px;">
-            <thead><tr><th>#</th><th>Área</th><th>Tarea</th><th>Responsable</th><th>Fecha</th><th>Estado</th></tr></thead>
-            <tbody id="checkupRutaBody"></tbody>
-          </table>
+        <div class="module-title" style="font-size:10px;">Ruta de Trabajo</div>
+        <div class="card" style="padding:16px 18px; display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+          <div style="font-size:13px; color:var(--gray-1); flex:1; min-width:220px;"><b id="checkupRutaProgreso" style="color:var(--white);"></b><br>Las 46 tareas del check-up (30 / 60 / 90 días) ahora están en su propia pantalla, con filtros y avance.</div>
+          <button class="btn-sm primary" id="checkupVerRuta">Abrir Ruta de trabajo →</button>
         </div>
       </div>
-
       <div class="module">
         <div class="module-title">Evaluación del Equipo</div>
         <div class="module-desc">Evaluación por función, no por persona. "Información pendiente" cuando falte un dato — nunca se infiere desempeño a partir del salario o de la facturación total de la clínica.</div>
@@ -896,7 +991,6 @@ table.data-table td.del-cell{ text-align:center; }
         </div>
         <div class="stack" id="evaluacionEquipoList"></div>
       </div>
-
       <div class="module">
         <div class="module-title">Diagnóstico Financiero</div>
         <div class="module-desc">Previsto para noviembre de 2026. La información del Check-up Operativo queda disponible como contexto para no repetir preguntas.</div>
@@ -916,7 +1010,6 @@ table.data-table td.del-cell{ text-align:center; }
         <div class="stack" id="diagFinDudasList"></div>
         <button class="add-row-btn" id="addDiagFinDuda">+ Agregar duda</button>
       </div>
-
       <div class="module">
         <div class="module-title">Integración y Plan de Intervención</div>
         <div class="module-desc">No son fases nuevas — son hitos dentro de la ruta existente (cierre de Rentabilidad / inicio de Optimización).</div>
@@ -933,6 +1026,46 @@ table.data-table td.del-cell{ text-align:center; }
           </div>
         </div>
       </div>
+      </div>
+
+      <div class="ntab-pane" data-pane="inventario">
+      <div class="module" id="inventarioModule">
+        <div class="module-title">Inventario de la Clínica</div>
+        <div class="module-desc">Conteo físico del <span id="invFecha"></span>, levantado por <span id="invConto"></span>. Costo = precio de compra por pieza. Valor actual = costo menos la depreciación fiscal (SAT) de mobiliario, aparatología, electrónica y equipo de ejercicio; los insumos y la ropa blanca no se deprecian. Un artículo sin precio se cuenta pero no se valúa.</div>
+
+        <div id="invKpis" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:14px;"></div>
+
+        <div class="card" style="padding:14px 18px; margin-bottom:18px;">
+          <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:flex-end;">
+            <div class="field" style="width:130px;"><label>Depreciación anual (%)</label><input type="number" id="invTasa" min="0" max="100" step="1"></div>
+            <div class="field" style="width:130px;"><label>Años de uso</label><input type="number" id="invAnios" min="0" max="50" step="1"></div>
+            <p style="font-size:11.5px; color:var(--gray-2); margin:0; flex:1; min-width:220px;">Tasa de referencia del SAT para mobiliario y equipo: 10% anual. Se aplicó el mismo número de años de uso a todo; ajústalo si Fernando tiene fechas de compra reales. Confirmar la tasa con el contador.</p>
+          </div>
+        </div>
+
+        <div class="module-title" style="font-size:10px;">Resumen por Categoría</div>
+        <div class="table-wrap" style="margin-bottom:18px;"><table class="data-table" style="min-width:640px;"><thead><tr><th>Categoría</th><th>Piezas</th><th>Sin valuar</th><th>Costo</th><th>Valor actual</th></tr></thead><tbody id="invResCat"></tbody></table></div>
+
+        <div class="module-title" style="font-size:10px;">Resumen por Espacio</div>
+        <div class="table-wrap" style="margin-bottom:18px;"><table class="data-table" style="min-width:640px;"><thead><tr><th>Espacio</th><th>Piezas</th><th>Sin valuar</th><th>Costo</th><th>Valor actual</th></tr></thead><tbody id="invResUbic"></tbody></table></div>
+
+        <div class="module-title" style="font-size:10px;">Tareas de la Ruta de Trabajo relacionadas</div>
+        <div class="stack" id="invRutaRel" style="margin-bottom:18px;"></div>
+
+        <div class="module-title" style="font-size:10px;">Detalle por Categoría</div>
+        <div class="module-desc" style="margin-top:-6px;">Abre una categoría para editar cantidades y costos, o usa "+ Agregar" dentro de ella cuando compren algo nuevo. Los totales se recalculan solos.</div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px;">
+          <select class="sel" id="invFUbic" style="width:auto;"></select>
+          <input type="text" id="invFQ" placeholder="Buscar artículo…" style="background:var(--bg); border:1px solid var(--hairline-2); border-radius:7px; padding:7px 10px; font-size:12px; color:var(--white); min-width:160px;">
+          <label style="font-size:12px; color:var(--gray-1); display:flex; gap:6px; align-items:center;"><input type="checkbox" id="invFSin"> Solo sin valuar</label>
+          <button class="btn-sm" id="invAbrirTodo">Abrir todo</button>
+          <button class="btn-sm" id="invCerrarTodo">Cerrar todo</button>
+          <span id="invFCuenta" style="font-size:11.5px; color:var(--gray-2);"></span>
+        </div>
+        <div id="invGrupos"></div>
+      </div>
+      </div>
+
     </section>
 
     <!-- ======================= 03 FLUJO ======================= -->
@@ -1566,6 +1699,17 @@ function lv(numero, pregunta, respuesta){
   return { numero, pregunta, respuesta, fuente:'Levantamiento WhatsApp', fecha:'Septiembre 2026', estado:'Levantado', evidencia:[], hipotesis:[], pendientes:[], notas:'' };
 }
 
+/* Inventario de la clínica: conteo físico del 14/11/2026. Cada renglón = [ubicación, categoría, artículo, cantidad, costo unitario (null = sin valuar), nota]. */
+function defaultInventario(){
+  const filas = [["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Sillón individual", 1, null, "INM-001"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Mesa de centro", 1, null, "INM-002"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Banco de madera gris", 1, 100, "INM-003"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Camilla", 1, 4843, "INM-004"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Anaquel", 1, 2000, "INM-005"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "Ventilador Lasko", 1, 1600, "INM-006"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "Calentador Heater", 1, 3095, "INM-007"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Espejo de pared", 1, 1000, "INM-008"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Banco giratorio", 1, 1121, "INM-009"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "Negatoscopio", 1, 985, "INM-010"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Mesa de apoyo", 1, 799, "INM-011"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Repisa perchero", 1, 600, "INM-012"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Juego de cortina", 1, 1400, "INM-013"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Lámpara de techo", 1, 250, "INM-014"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Dispensador de papel", 1, 300, "INM-015"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Bote de basura", 1, 300, "INM-016"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Tapete", 1, 2000, "INM-017"], ["Consultorio 1 (Cabina 1)", "Mobiliario y enseres", "Canasta", 1, 290, "INM-018"], ["Oficina", "Electrónica y oficina", "Vidrio pizarrón", 1, 1400, "OFI-001"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "BTL 4000 Pro Premium (serie BTL-2825SL Premium)", 1, 261000, "EQP-001"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "BTL-VAC II (serie 04200B002445)", 1, 261000, "EQP-002"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "BTL Ondas de choque (serie 84400B001793)", 1, 373038, "EQP-003"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "Pistola de masajes (sin marca ni serie)", 1, 700, "EQP-004"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "Compresa eléctrica Theratherm", 1, 2250, "EQP-005"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "Compresa grande Theratherm", 1, null, "EQP-006 sin costo (Fernando no recuerda)"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "Bandas / electrodos Mettler", 4, 180, "EQP-007"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "Electrodos de carbón Mettler", 4, 185, "EQP-008"], ["Consultorio 1 (Cabina 1)", "Aparatología y equipo médico", "Electrodos de ventosas BTL", 2, 2000, "EQP-009"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Aromaterapia (productos variados)", 12, null, "CAB-001"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Cinta kinesiológica", 4, 98, "CAB-002"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Electrodos de gel", 3, 130, "CAB-003"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Alcohol (5 litros)", 5, 90, "CAB-004 costo total $450; costo total $450"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Frasco de ventosas de 5", 1, null, "CAB-005 a 010"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Frasco de ventosas de 4", 2, null, "CAB-005 a 010"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Frasco de ventosas de 3", 2, null, "CAB-005 a 010"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Frasco de ventosas de 2", 2, null, "CAB-005 a 010"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Frasco de ventosas de 1", 2, null, "CAB-005 a 010"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Ventosas frías", 2, null, "CAB-005 a 010"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Ventosas de bambú claras", 6, null, "CAB-011"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Ventosas de bambú oscuras", 5, null, "CAB-012"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Ventosas frías (caja completa)", 1, null, "CAB-013"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Compresa química", 1, null, "CAB-014"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Caja de acupuntura 25x13", 1, 455, "CAB-015"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Caja de acupuntura 25x25", 1, 455, "CAB-016"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Caja de agujas de acupuntura 0.32x75", 1, null, "CAB-017"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Checador de nivel de azúcar", 1, 925, "CAB-018"], ["Consultorio 1 (Cabina 1)", "Insumos y consumibles", "Kit de pruebas de diabetes", 1, null, "CAB-019"], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Carrito de apoyo", 1, 999, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Ropa blanca y textiles", "Cojines de cilindro", 3, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Frasco de ventosas de 5", 1, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Frasco de ventosas de 4", 2, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Frasco de ventosas de 3", 2, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Frasco de ventosas de 2", 2, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Frasco de ventosas de 1", 1, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Aparatología y equipo médico", "Ultrasonido", 1, 2000, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Aparatología y equipo médico", "Láser terapia", 1, 12000, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Aparatología y equipo médico", "CareTech 4 (electroterapia)", 1, 2000, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Aparatología y equipo médico", "Pistola de masaje (regular)", 1, 700, "también hay una en Consultorio 1; juegos distintos"], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Canasta", 1, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Protectores de camilla", 3, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Ventosas de bambú", 6, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Aromaterapia", 15, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Cinta kinesiológica", 1, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Cinturones para aceite", 2, 289, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Sillones reclinables", 2, 8000, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Taburetes", 2, 900, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Mesita de centro", 1, 500, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Percheros", 3, 1323, "verificar precio unitario"], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Repisas", 2, 400, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Mueble", 1, 4600, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Camilla", 1, 4700, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Aparatología y equipo médico", "Calefactor", 1, 1959, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Aparatología y equipo médico", "Tanque de gas para calefactor", 1, 900, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Espejo de pared", 1, 2000, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Lámpara de canasta", 1, 700, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Lámparas de techo", 3, 390, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Cortina con cortinero", 1, 4500, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Tira de luz LED", 1, 300, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Dispensador de papel", 1, 300, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Humidificadores", 2, 2000, "verificar precio unitario"], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Tapete", 1, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Electrónica y oficina", "Bocina Bose", 1, 1400, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Electrónica y oficina", "Adaptadores", 2, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Electrónica y oficina", "Controles", 1, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Pinzas quirúrgicas", 1, 200, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Insumos y consumibles", "Soplete", 1, 70, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Cuenco tibetano", 1, 1000, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Buda", 1, 500, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Mobiliario y enseres", "Reloj de arena", 1, 500, ""], ["Sala de espera", "Mobiliario y enseres", "Sillón Oxford", 1, 1500, ""], ["Sala de espera", "Mobiliario y enseres", "Mesita", 1, 500, "precio leído por alineación"], ["Sala de espera", "Mobiliario y enseres", "Perchero", 1, 200, "precio leído por alineación"], ["Sala de espera", "Mobiliario y enseres", "Sillón vintage", 1, 800, ""], ["Sala de espera", "Mobiliario y enseres", "Tapete beige", 1, 400, ""], ["Sala de espera", "Mobiliario y enseres", "Cucharas doradas", 4, 60, ""], ["Sala de espera", "Mobiliario y enseres", "Periqueras", 2, null, ""], ["Sala de espera", "Mobiliario y enseres", "Banca", 1, null, ""], ["Sala de espera", "Mobiliario y enseres", "Tapete de colores", 1, null, ""], ["Sala de espera", "Mobiliario y enseres", "Pizarrón blanco", 1, 3000, ""], ["Sala de espera", "Mobiliario y enseres", "Lámparas de techo", 5, null, ""], ["Sala de espera", "Electrónica y oficina", "Cámaras", 2, 1499, ""], ["Sala de espera", "Mobiliario y enseres", "Lámpara de sensor de movimiento", 1, null, ""], ["Sala de espera", "Mobiliario y enseres", "Mesa de madera", 1, null, ""], ["Sala de espera", "Mobiliario y enseres", "Piedra obsidiana", 1, 3000, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Pelotitas", 9, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Par de polainas 1 kg", 1, 500, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Par de polainas 2 kg", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Par de mancuernas 500 g", 2, 199, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Par de mancuernas 1 kg", 1, 199, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Rodillo de madera", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Bloque de yoga", 1, 179, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Espuma para rodilla", 1, null, ""], ["Área de rehabilitación", "Electrónica y oficina", "TV", 1, 3000, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Correa de yoga", 1, 169, ""], ["Área de rehabilitación", "Mobiliario y enseres", "Anaquel", 1, 700, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Tapete de yoga", 1, 299, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Cuerda para saltar", 1, null, ""], ["Área de rehabilitación", "Aparatología y equipo médico", "Parafinero Therabath", 1, 4500, ""], ["Área de rehabilitación", "Mobiliario y enseres", "Dispensador de agua", 1, null, ""], ["Área de rehabilitación", "Mobiliario y enseres", "Banquito", 1, 100, ""], ["Área de rehabilitación", "Mobiliario y enseres", "Repisa", 1, 300, ""], ["Área de rehabilitación", "Mobiliario y enseres", "Cesto organizador", 1, 200, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Paquete de conos de ejercicio", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Kit de pesas", 1, 1499, ""], ["Área de rehabilitación", "Mobiliario y enseres", "Sillas de madera", 2, 500, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Banco escalera", 1, null, ""], ["Área de rehabilitación", "Mobiliario y enseres", "Bote de basura", 1, 289, ""], ["Área de rehabilitación", "Mobiliario y enseres", "Bote de basura blanco", 1, null, ""], ["Área de rehabilitación", "Mobiliario y enseres", "Lámpara de techo", 1, 360, ""], ["Área de rehabilitación", "Mobiliario y enseres", "Tapete", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Escalerilla digital", 1, 790, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Escalera rusa", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Barra de ejercicio", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Discos de 20 kg", 2, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Pelota Bobath", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Bosu mediano", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Tablas de balance", 2, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Bosu chico", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Bastón de ejercicio", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Pesa rusa 6 kg", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Pesa rusa 8 kg", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Bandas circulares", 2, 895, "leído $895, verificar"], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Aro", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Protección de barra", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Tapete Lululemon", 1, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Banda elástica suelta", 1, 169, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Paquete de banda elástica", 1, 180, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Bosu extra chico", 2, null, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Paquete de ejercitador de manos", 1, 399, ""], ["Área de rehabilitación", "Rehabilitación y ejercicio", "Ejercitador de mano", 1, null, ""], ["Bodega", "Mobiliario y enseres", "Camilla grande", 1, 4700, ""], ["Bodega", "Mobiliario y enseres", "Camilla chica", 1, 3800, ""], ["Bodega", "Mobiliario y enseres", "Mesa plegable", 1, null, ""], ["Bodega", "Ropa blanca y textiles", "Sábanas individuales", 18, null, ""], ["Bodega", "Aparatología y equipo médico", "Cabina de vapor doble", 1, null, ""], ["Bodega", "Aparatología y equipo médico", "Tina para hidroterapia", 1, 1592, ""], ["Bodega", "Ropa blanca y textiles", "Batas", 2, null, ""], ["Bodega", "Ropa blanca y textiles", "Sandalias", 2, null, ""], ["Bodega", "Ropa blanca y textiles", "Cortina de baño", 1, null, ""], ["Bodega", "Aparatología y equipo médico", "Bañera spa", 1, 1239, ""], ["Bodega", "Mobiliario y enseres", "Tapetes chicos", 3, null, ""], ["Bodega", "Mobiliario y enseres", "Sillas plegables", 2, null, ""], ["Bodega", "Mobiliario y enseres", "Sillas plegables forradas", 4, null, ""], ["Bodega", "Mobiliario y enseres", "Tapetes", 2, null, ""], ["Bodega", "Ropa blanca y textiles", "Cojines de cilindro", 2, null, ""], ["Bodega", "Insumos y consumibles", "Bote de alcohol en gel", 1, null, ""], ["Bodega", "Mobiliario y enseres", "Tendedero", 1, null, ""], ["Bodega", "Ropa blanca y textiles", "Toallas de manos", 2, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Toallas chicas", 3, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Toallas medianas", 2, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Toallas grandes", 3, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Toallas de manos", 10, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Toallas de cara", 25, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Toallas de manos azules", 4, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Sandalias", 1, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Bata", 1, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Cobijas", 2, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Cojines cuadrados", 2, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Cojines de cilindro", 2, null, ""], ["Consultorio 1 (Cabina 1)", "Ropa blanca y textiles", "Almohadas", 1, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Ropa blanca y textiles", "Toallas medianas", 4, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Ropa blanca y textiles", "Toallas de cara (5 + 11 de casa de Fernando)", 16, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Ropa blanca y textiles", "Sandalias", 1, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Ropa blanca y textiles", "Bata", 1, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Ropa blanca y textiles", "Cobijas", 2, null, ""], ["Consultorio 2 (Masajes / Cabina 2)", "Ropa blanca y textiles", "Cojines cuadrados", 2, null, ""]];
+  return {
+    fechaConteo: '2026-11-14',
+    conto: 'Saúl Cruz Flores',
+    tasa: 10,
+    anios: 5,
+    items: filas.map((f,i)=>({ id:'inv'+String(i+1).padStart(3,'0'), ubicacion:f[0], categoria:f[1], articulo:f[2], cantidad:f[3], precio:f[4], nota:f[5] }))
+  };
+}
 function defaultState(){
   return {
     cliente: {
@@ -1924,6 +2068,7 @@ Se cuenta con una fotografía inicial clara de ingresos, estructura de personal,
 
     /* Bandera de migraciones de datos ya guardados (en la nube o en este dispositivo) — evita repetir o perder cambios ya hechos por Fernando, Paula o Saúl. */
     migraciones: {},
+    inventario: defaultInventario(),
 
     /* ======================= HITOS (no son fases nuevas) ======================= */
     hitos: {
@@ -2079,6 +2224,12 @@ function migrateSesiones(def, parsedSesiones){
    dispositivo — con las 9 áreas genéricas y los montos del levantamiento inicial. Se controla con una bandera
    (migraciones.diagnosticoProcesos) para que, una vez aplicada, nunca se repita ni sobrescriba lo que Fernando,
    Paula o Saúl capturen después (ventas, gastos, estados de tareas, etc. siguen su propio merge normal). */
+function migrateInventario(def, merged){
+  if(merged.migraciones && merged.migraciones.inventario) return merged;
+  if(!merged.inventario || !Array.isArray(merged.inventario.items) || !merged.inventario.items.length) merged.inventario = JSON.parse(JSON.stringify(def.inventario));
+  merged.migraciones = Object.assign({}, merged.migraciones, { inventario: true });
+  return merged;
+}
 function migrateDiagnosticoProcesos(def, merged){
   if(merged.migraciones && merged.migraciones.diagnosticoProcesos) return merged;
   merged.checkupOperativo.estado = def.checkupOperativo.estado;
@@ -2121,7 +2272,7 @@ function loadState(){
   const def = defaultState();
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw){ const d = JSON.parse(JSON.stringify(def)); d.migraciones = Object.assign({}, d.migraciones, {diagnosticoProcesos:true}); return d; }
+    if(!raw){ const d = JSON.parse(JSON.stringify(def)); d.migraciones = Object.assign({}, d.migraciones, {diagnosticoProcesos:true, inventario:true}); return d; }
     const parsed = JSON.parse(raw);
     const merged = Object.assign({}, def, parsed);
     merged.cliente = Object.assign({}, def.cliente, parsed.cliente||{});
@@ -2166,8 +2317,9 @@ function loadState(){
     if(Array.isArray(merged.fases)) merged.fases.forEach(f=>{ if(f.progreso==null) f.progreso=0; if(f.criterioCierre==null) f.criterioCierre=''; });
     merged.evaluacionEquipoResumen = Object.assign({}, def.evaluacionEquipoResumen, parsed.evaluacionEquipoResumen||{});
     merged.diagnosticoProcesos = Object.assign({}, def.diagnosticoProcesos, parsed.diagnosticoProcesos||{});
+    merged.inventario = Object.assign({}, def.inventario, parsed.inventario||{});
     merged.migraciones = Object.assign({}, parsed.migraciones||{});
-    return migrateDiagnosticoProcesos(def, merged);
+    return migrateInventario(def, migrateDiagnosticoProcesos(def, merged));
   }catch(e){ console.warn('No se pudo cargar el estado guardado, usando valores por defecto.', e); return def; }
 }
 
@@ -2553,6 +2705,8 @@ function switchSub(scope, name){
 function initNav(){
   $all('.nav button').forEach(btn=> btn.addEventListener('click', ()=> switchView(btn.dataset.view)));
   $all('#negocioSubnav button').forEach(btn=> btn.addEventListener('click', ()=> switchSub('negocio', btn.dataset.sub)));
+  $all('#negTabs button').forEach(btn=> btn.addEventListener('click', ()=> switchNegTab(btn.dataset.ntab)));
+  const bt = $('#btnTema'); if(bt){ aplicarTema(document.documentElement.getAttribute('data-theme')||'claro'); bt.onclick = ()=>{ aplicarTema(document.documentElement.getAttribute('data-theme')==='claro' ? 'oscuro' : 'claro'); renderAll(); }; }
   $all('#controlSubnav button').forEach(btn=> btn.addEventListener('click', ()=> switchSub('control', btn.dataset.csub)));
   const sidebar = $('#sidebar'), overlay = $('#overlay'), toggle = $('#menuToggle');
   if(toggle){
@@ -4841,8 +4995,9 @@ function applyImportedState(jsonStr){
   if(Array.isArray(state.fases)) state.fases.forEach(f=>{ if(f.progreso==null) f.progreso=0; if(f.criterioCierre==null) f.criterioCierre=''; });
   state.evaluacionEquipoResumen = Object.assign({}, def.evaluacionEquipoResumen, parsed.evaluacionEquipoResumen||{});
   state.diagnosticoProcesos = Object.assign({}, def.diagnosticoProcesos, parsed.diagnosticoProcesos||{});
+  state.inventario = Object.assign({}, def.inventario, parsed.inventario||{});
   state.migraciones = Object.assign({}, parsed.migraciones||{});
-  state = migrateDiagnosticoProcesos(def, state);
+  state = migrateInventario(def, migrateDiagnosticoProcesos(def, state));
   saveState();
   renderAll();
 }
@@ -4912,6 +5067,302 @@ function reportError(label, e){
   document.body.appendChild(bar);
 }
 
+/* ==========================================================================
+   INVENTARIO DE LA CLÍNICA
+   ========================================================================== */
+const INV_CATS = [
+  {n:'Aparatología y equipo médico', dep:true},
+  {n:'Mobiliario y enseres', dep:true},
+  {n:'Electrónica y oficina', dep:true},
+  {n:'Rehabilitación y ejercicio', dep:true},
+  {n:'Insumos y consumibles', dep:false},
+  {n:'Ropa blanca y textiles', dep:false}
+];
+const INV_UBICS = ['Consultorio 1 (Cabina 1)','Consultorio 2 (Masajes / Cabina 2)','Sala de espera','Área de rehabilitación','Bodega','Oficina'];
+const invFiltro = {ubic:'', cat:'', sin:false, q:''};
+function invMoney(n){ return (n==null) ? '—' : '$' + Math.round(n).toLocaleString('es-MX'); }
+function invFactor(inv){
+  const t = Number(inv.tasa), a = Number(inv.anios);
+  return Math.max(0, Math.min(1, 1 - (isNaN(t)?0:t)/100 * (isNaN(a)?0:a)));
+}
+function invCosto(it){
+  if(it.precio===null || it.precio===undefined || it.precio==='') return null;
+  const p = Number(it.precio); if(isNaN(p)) return null;
+  return (Number(it.cantidad)||0) * p;
+}
+function invValor(it, inv){
+  const c = invCosto(it); if(c===null) return null;
+  const cat = INV_CATS.find(x=>x.n===it.categoria);
+  return (cat && cat.dep) ? c * invFactor(inv) : c;
+}
+function invOpciones(lista, extra, actual){
+  const todas = lista.slice();
+  extra.forEach(v=>{ if(v && todas.indexOf(v)<0) todas.push(v); });
+  return todas.map(v=>`<option value="${esc(v)}" ${v===actual?'selected':''}>${esc(v)}</option>`).join('');
+}
+function renderInventarioResumen(){
+  const inv = state.inventario; if(!inv || !Array.isArray(inv.items)) return;
+  let piezas=0, costo=0, valor=0, sinPz=0, sinRg=0;
+  const porCat = {}, porUbic = {};
+  const acum = (d,k,it,c,v)=>{
+    const o = d[k] || (d[k] = {piezas:0, sin:0, costo:0, valor:0});
+    const q = Number(it.cantidad)||0;
+    o.piezas += q; if(c===null) o.sin += q; else { o.costo += c; o.valor += v; }
+  };
+  inv.items.forEach(it=>{
+    const q = Number(it.cantidad)||0, c = invCosto(it), v = invValor(it, inv);
+    piezas += q;
+    if(c===null){ sinPz += q; sinRg += 1; } else { costo += c; valor += v; }
+    acum(porCat, it.categoria, it, c, v); acum(porUbic, it.ubicacion, it, c, v);
+  });
+  const kp = $('#invKpis');
+  if(kp){
+    const card = (k,v,f)=>`<div class="snapshot-card card"><div class="k">${k}</div><div class="v">${v}</div>${f?`<div class="f">${f}</div>`:''}</div>`;
+    kp.innerHTML = card('Piezas contadas', piezas.toLocaleString('es-MX'), inv.items.length + ' renglones')
+      + card('Costo de compra', invMoney(costo), 'solo lo que tiene precio')
+      + card('Valor actual', invMoney(valor), 'con depreciación')
+      + card('Sin valuar', sinPz.toLocaleString('es-MX') + ' pzas', sinRg + ' renglones sin precio');
+  }
+  const fila = (nombre,o)=>`<tr><td>${esc(nombre)}</td><td style="font-family:var(--mono);">${o.piezas.toLocaleString('es-MX')}</td><td style="font-family:var(--mono);">${o.sin.toLocaleString('es-MX')}</td><td style="font-family:var(--mono);">${invMoney(o.costo)}</td><td style="font-family:var(--mono);">${invMoney(o.valor)}</td></tr>`;
+  const tabla = (d, orden)=>{
+    const llaves = orden.filter(k=>d[k]).concat(Object.keys(d).filter(k=>orden.indexOf(k)<0));
+    const tot = {piezas:piezas, sin:sinPz, costo:costo, valor:valor};
+    return llaves.map(k=>fila(k,d[k])).join('') + `<tr style="font-weight:800;">${fila('TOTAL',tot).replace(/^<tr>/,'').replace(/<\/tr>$/,'')}</tr>`;
+  };
+  const rc = $('#invResCat'); if(rc) rc.innerHTML = tabla(porCat, INV_CATS.map(c=>c.n));
+  const ru = $('#invResUbic'); if(ru) ru.innerHTML = tabla(porUbic, INV_UBICS);
+}
+const invAbiertas = {};
+function invResumenTxt(cn){
+  const inv = state.inventario; let piezas=0, costo=0, valor=0, sin=0;
+  inv.items.filter(i=>i.categoria===cn).forEach(it=>{
+    const q = Number(it.cantidad)||0, c = invCosto(it); piezas += q;
+    if(c===null) sin += q; else { costo += c; valor += invValor(it, inv); }
+  });
+  return `${piezas.toLocaleString('es-MX')} pzas · ${invMoney(costo)} costo · ${invMoney(valor)} hoy` + (sin ? ` · <b style="color:var(--amber);">${sin} sin valuar</b>` : '');
+}
+function invRenderGrupos(){
+  const inv = state.inventario; const cont = $('#invGrupos'); if(!inv || !cont) return;
+  const q = invFiltro.q.trim().toLowerCase();
+  const filtrando = !!(q || invFiltro.sin || invFiltro.ubic);
+  const pasa = it=>{
+    if(invFiltro.ubic && it.ubicacion!==invFiltro.ubic) return false;
+    if(invFiltro.sin && invCosto(it)!==null) return false;
+    if(q && (String(it.articulo||'')+' '+String(it.nota||'')).toLowerCase().indexOf(q)<0) return false;
+    return true;
+  };
+  const cats = INV_CATS.map(c=>c.n);
+  inv.items.forEach(i=>{ if(cats.indexOf(i.categoria)<0) cats.push(i.categoria); });
+  const ubicExtra = inv.items.map(i=>i.ubicacion);
+  const cuenta = $('#invFCuenta'); if(cuenta) cuenta.textContent = inv.items.filter(pasa).length + ' de ' + inv.items.length + ' renglones';
+  const fila = it=>`
+    <tr data-inv="${it.id}">
+      <td><select class="sel" data-f="ubicacion" style="width:auto; max-width:170px;">${invOpciones(INV_UBICS, ubicExtra, it.ubicacion)}</select></td>
+      <td><input type="text" data-f="articulo" value="${esc(it.articulo)}" style="min-width:210px;"></td>
+      <td><input type="number" data-f="cantidad" min="0" step="1" value="${esc(it.cantidad)}" style="width:70px;"></td>
+      <td><input type="number" data-f="precio" min="0" step="any" placeholder="sin valuar" value="${it.precio===null||it.precio===undefined?'':esc(it.precio)}" style="width:110px;"></td>
+      <td class="inv-c" style="font-family:var(--mono);"></td>
+      <td class="inv-v" style="font-family:var(--mono);"></td>
+      <td><input type="text" data-f="nota" value="${esc(it.nota)}" style="min-width:170px;"></td>
+      <td class="del-cell"><button class="icon-btn" data-inv-del="${it.id}" title="Eliminar">✕</button></td>
+    </tr>`;
+  cont.innerHTML = cats.map(cn=>{
+    const vis = inv.items.filter(i=>i.categoria===cn && pasa(i));
+    if(filtrando && !vis.length) return '';
+    const abierta = invAbiertas[cn] || (filtrando && vis.length>0);
+    return `<details class="inv-grupo" data-cat="${esc(cn)}" ${abierta?'open':''}>
+      <summary><span class="inv-g-n">${esc(cn)}</span><span class="inv-g-s">${invResumenTxt(cn)}</span></summary>
+      <div class="table-wrap" style="margin:12px 0;"><table class="data-table" style="min-width:960px;">
+        <thead><tr><th>Espacio</th><th>Artículo</th><th>Cant.</th><th>Costo unit.</th><th>Costo total</th><th>Valor actual</th><th>Nota</th><th></th></tr></thead>
+        <tbody>${vis.map(fila).join('') || '<tr><td colspan="8" style="color:var(--gray-2);">Sin artículos con esos filtros.</td></tr>'}</tbody>
+      </table></div>
+      <button class="add-row-btn" data-inv-add="${esc(cn)}">+ Agregar a ${esc(cn)}</button>
+    </details>`;
+  }).join('') || '<div class="card entry-card" style="color:var(--gray-2); font-size:12.5px;">Sin artículos con esos filtros.</div>';
+  const pintar = (tr,it)=>{
+    const c = invCosto(it), v = invValor(it, inv);
+    tr.querySelector('.inv-c').textContent = invMoney(c);
+    const cv = tr.querySelector('.inv-v'); cv.textContent = c===null ? 'sin valuar' : invMoney(v);
+    cv.style.color = c===null ? 'var(--amber)' : '';
+  };
+  cont.querySelectorAll('details.inv-grupo').forEach(d=>{
+    const cn = d.dataset.cat;
+    d.addEventListener('toggle', ()=>{ invAbiertas[cn] = d.open; });
+    d.querySelectorAll('tr[data-inv]').forEach(tr=>{
+      const it = inv.items.find(x=>x.id===tr.dataset.inv); if(!it) return;
+      pintar(tr,it);
+      tr.querySelectorAll('[data-f]').forEach(node=>{
+        const f = node.dataset.f;
+        node[(node.tagName==='SELECT') ? 'onchange' : 'oninput'] = ()=>{
+          if(f==='cantidad') it.cantidad = node.value==='' ? 0 : Number(node.value);
+          else if(f==='precio') it.precio = node.value==='' ? null : Number(node.value);
+          else it[f] = node.value;
+          saveState();
+          if(f==='ubicacion'){ renderInventarioResumen(); if(invFiltro.ubic) invRenderGrupos(); }
+          else if(f==='cantidad' || f==='precio'){
+            pintar(tr,it); renderInventarioResumen();
+            const s = d.querySelector('.inv-g-s'); if(s) s.innerHTML = invResumenTxt(cn);
+          }
+        };
+      });
+      const del = tr.querySelector('[data-inv-del]');
+      if(del) del.onclick = ()=>{
+        if(!confirm('¿Eliminar este artículo del inventario?')) return;
+        inv.items = inv.items.filter(x=>x.id!==it.id);
+        invAbiertas[cn] = true; saveState(); renderInventarioResumen(); invRenderGrupos();
+      };
+    });
+    const add = d.querySelector('[data-inv-add]');
+    if(add) add.onclick = ()=>{
+      invFiltro.q = ''; invFiltro.sin = false; const fq = $('#invFQ'), fs = $('#invFSin'); if(fq) fq.value=''; if(fs) fs.checked=false;
+      const nuevo = {id:uid(), ubicacion: invFiltro.ubic || INV_UBICS[0], categoria:cn, articulo:'', cantidad:1, precio:null, nota:''};
+      inv.items.push(nuevo); invAbiertas[cn] = true; saveState(); renderInventarioResumen(); invRenderGrupos();
+      const inp = document.querySelector('tr[data-inv="'+nuevo.id+'"] [data-f="articulo"]'); if(inp) inp.focus();
+    };
+  });
+}
+function renderInvRutaRel(){
+  const ruta = (state.checkupOperativo && Array.isArray(state.checkupOperativo.rutaTrabajo)) ? state.checkupOperativo.rutaTrabajo : [];
+  const rel = ruta.filter(t=>t.area==='Inventario');
+  const rr = $('#invRutaRel'); if(!rr) return;
+  rr.innerHTML = rel.length ? rel.map(t=>`<div class="card entry-card" style="display:flex; gap:10px; align-items:center; justify-content:space-between;"><div style="font-size:12.5px;"><b style="font-family:var(--mono);">${t.critica?'⚑ ':''}${String(t.numero).padStart(2,'0')}</b> · ${esc(t.tarea)}</div><span class="pill ${tareaTone(t.estado)}">${esc(t.estado)}</span></div>`).join('') : '<div class="card entry-card" style="font-size:12.5px; color:var(--gray-2);">Sin tareas de inventario en la ruta de trabajo.</div>';
+}
+function renderInventario(){
+  const inv = state.inventario; if(!inv || !Array.isArray(inv.items) || !$('#inventarioModule')) return;
+  $('#invFecha').textContent = inv.fechaConteo ? inv.fechaConteo.split('-').reverse().join('/') : '—';
+  $('#invConto').textContent = inv.conto || '—';
+  const tasa = $('#invTasa'), anios = $('#invAnios');
+  tasa.value = inv.tasa; anios.value = inv.anios;
+  const recalc = ()=>{ saveState(); renderInventarioResumen(); invRenderGrupos(); };
+  tasa.oninput = ()=>{ inv.tasa = tasa.value===''?0:Number(tasa.value); recalc(); };
+  anios.oninput = ()=>{ inv.anios = anios.value===''?0:Number(anios.value); recalc(); };
+  const fu = $('#invFUbic');
+  fu.innerHTML = '<option value="">Todos los espacios</option>' + invOpciones(INV_UBICS, inv.items.map(i=>i.ubicacion), invFiltro.ubic);
+  fu.onchange = ()=>{ invFiltro.ubic = fu.value; invRenderGrupos(); };
+  const fq = $('#invFQ'), fs = $('#invFSin');
+  fq.value = invFiltro.q; fs.checked = invFiltro.sin;
+  fq.oninput = ()=>{ invFiltro.q = fq.value; invRenderGrupos(); };
+  fs.onchange = ()=>{ invFiltro.sin = fs.checked; invRenderGrupos(); };
+  const todas = ()=>{ const s = INV_CATS.map(c=>c.n); inv.items.forEach(i=>{ if(s.indexOf(i.categoria)<0) s.push(i.categoria); }); return s; };
+  $('#invAbrirTodo').onclick = ()=>{ todas().forEach(c=>invAbiertas[c]=true); invRenderGrupos(); };
+  $('#invCerrarTodo').onclick = ()=>{ todas().forEach(c=>invAbiertas[c]=false); invRenderGrupos(); };
+  renderInvRutaRel(); renderInventarioResumen(); invRenderGrupos();
+}
+/* ==========================================================================
+   RUTA DE TRABAJO (46 tareas del Check-up Operativo) · PORTADA "LO QUE TOCA"
+   ========================================================================== */
+const rtFiltro = {fase:'todas', estado:'', area:''};
+function rtLista(){ const c = state.checkupOperativo; return (c && Array.isArray(c.rutaTrabajo)) ? c.rutaTrabajo : []; }
+function rtHoy(){ return new Date().toLocaleDateString('en-CA'); }
+function rtVencida(t){ return !!(t.fecha && t.fecha < rtHoy() && t.estado!=='Hecho'); }
+function rtOrdenPendientes(){
+  const f = {'30':0,'60':1,'90':2};
+  return rtLista().filter(t=>t.estado!=='Hecho').sort((a,b)=>
+    (a.estado==='En proceso'?0:1)-(b.estado==='En proceso'?0:1) || (f[a.fase]-f[b.fase]) || ((b.critica?1:0)-(a.critica?1:0)) || (a.numero-b.numero));
+}
+function rtTarjeta(t){
+  const hecho = t.estado==='Hecho';
+  return `<div class="card rt-task ${hecho?'hecho':''}" data-rt="${t.id}">
+    <button class="rt-check" data-rt-check="${t.id}" title="${hecho?'Marcar como pendiente':'Marcar como hecha'}">✓</button>
+    <div class="rt-main">
+      <div class="rt-top"><span class="rt-num">${t.critica?'⚑ ':''}${String(t.numero).padStart(2,'0')}</span><span class="pill t-blue">${esc(t.area)}</span>${rtVencida(t)?'<span class="pill t-red">Vencida</span>':''}${t.critica?'<span class="pill t-amber">Crítica</span>':''}</div>
+      <div class="rt-text">${esc(t.tarea)}</div>
+      <div class="rt-fields">
+        <select data-rt-f="estado">${TAREA_ESTADOS.map(e=>`<option ${t.estado===e?'selected':''}>${e}</option>`).join('')}</select>
+        <input type="text" data-rt-f="responsable" placeholder="Responsable" value="${esc(t.responsable)}">
+        <input type="date" data-rt-f="fecha" value="${esc(t.fecha)}">
+      </div>
+    </div>
+  </div>`;
+}
+function rtEnlazar(cont){
+  const lista = rtLista();
+  cont.querySelectorAll('[data-rt]').forEach(card=>{
+    const t = lista.find(x=>x.id===card.dataset.rt); if(!t) return;
+    card.querySelectorAll('[data-rt-f]').forEach(node=>{
+      const f = node.dataset.rtF;
+      node[(node.tagName==='SELECT') ? 'onchange' : 'oninput'] = ()=>{
+        t[f] = node.value; saveState();
+        if(f==='estado' || f==='fecha') rtRefrescar();
+      };
+    });
+    const chk = card.querySelector('[data-rt-check]');
+    if(chk) chk.onclick = ()=>{ t.estado = (t.estado==='Hecho') ? 'Pendiente' : 'Hecho'; saveState(); rtRefrescar(); };
+  });
+}
+function rtRefrescar(){
+  renderRutaTrabajo(); renderPortadaToca(); renderInvRutaRel();
+  const l = rtLista(), h = l.filter(t=>t.estado==='Hecho').length;
+  const p = $('#checkupRutaProgreso'); if(p) p.textContent = l.length ? `${h} de ${l.length} tareas hechas` : '';
+}
+function renderRutaTrabajo(){
+  const lista = rtLista(); const cont = $('#rtLista'); if(!cont) return;
+  const total = lista.length, hechas = lista.filter(t=>t.estado==='Hecho').length;
+  const enProc = lista.filter(t=>t.estado==='En proceso').length;
+  const crit = lista.filter(t=>t.critica && t.estado!=='Hecho').length;
+  const venc = lista.filter(rtVencida).length;
+  const pct = total ? Math.round(hechas/total*100) : 0;
+  const fase = f=>{ const x = lista.filter(t=>t.fase===f); const h = x.filter(t=>t.estado==='Hecho').length; return {h:h, n:x.length, p:x.length?Math.round(h/x.length*100):0}; };
+  const nom = {'30':'Primeros 30 días','60':'Días 31 a 60','90':'Días 61 a 90'};
+  $('#rtResumen').innerHTML = `
+    <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:10px;">
+      <span style="font-family:var(--mono); font-size:30px; font-weight:800; color:var(--white);">${pct}%</span>
+      <span style="font-size:13px; color:var(--gray-1);">${hechas} de ${total} tareas hechas · ${enProc} en proceso</span>
+    </div>
+    <div class="rt-bar"><i style="width:${pct}%;"></i></div>
+    <div class="rt-fases">${['30','60','90'].map(f=>{ const r = fase(f); return `<div class="rt-fase"><div class="t">${nom[f]}</div><div class="n">${r.h}/${r.n}</div><div class="rt-bar"><i style="width:${r.p}%;"></i></div></div>`; }).join('')}
+      <div class="rt-fase"><div class="t">Críticas pendientes ⚑</div><div class="n" style="color:${crit?'var(--amber)':'var(--green)'};">${crit}</div></div>
+      <div class="rt-fase"><div class="t">Vencidas</div><div class="n" style="color:${venc?'var(--red)':'var(--green)'};">${venc}</div></div>
+    </div>`;
+  const ahora = rtOrdenPendientes().slice(0,5);
+  $('#rtAhora').innerHTML = ahora.length ? ahora.map(rtTarjeta).join('') : '<div class="card entry-card" style="font-size:13px; color:var(--green);">Todas las tareas de la ruta están hechas.</div>';
+  rtEnlazar($('#rtAhora'));
+
+  const fs = $('#rtFEstado'), fa = $('#rtFArea');
+  fs.innerHTML = '<option value="">Todos los estados</option>' + TAREA_ESTADOS.map(e=>`<option ${rtFiltro.estado===e?'selected':''}>${e}</option>`).join('');
+  const areas = []; lista.forEach(t=>{ if(areas.indexOf(t.area)<0) areas.push(t.area); });
+  fa.innerHTML = '<option value="">Todas las áreas</option>' + areas.map(a=>`<option ${rtFiltro.area===a?'selected':''}>${esc(a)}</option>`).join('');
+  fs.onchange = ()=>{ rtFiltro.estado = fs.value; renderRutaTrabajo(); };
+  fa.onchange = ()=>{ rtFiltro.area = fa.value; renderRutaTrabajo(); };
+  $all('#rtFases button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.rtf===rtFiltro.fase);
+    b.onclick = ()=>{ rtFiltro.fase = b.dataset.rtf; renderRutaTrabajo(); };
+  });
+  const vis = lista.filter(t=>{
+    if(rtFiltro.fase==='critica' ? !t.critica : (rtFiltro.fase!=='todas' && t.fase!==rtFiltro.fase)) return false;
+    if(rtFiltro.estado && t.estado!==rtFiltro.estado) return false;
+    if(rtFiltro.area && t.area!==rtFiltro.area) return false;
+    return true;
+  }).sort((a,b)=>a.numero-b.numero);
+  $('#rtCuenta').textContent = vis.length + ' de ' + total + ' tareas';
+  const grupos = [['30','Primeros 30 días — lo urgente'], ['60','Días 31 a 60 — ordenar'], ['90','Días 61 a 90 — controlar y medir']];
+  cont.innerHTML = grupos.map(([f,tit])=>{
+    const x = vis.filter(t=>t.fase===f); if(!x.length) return '';
+    return `<div class="rt-grupo">${tit}</div><div class="stack">${x.map(rtTarjeta).join('')}</div>`;
+  }).join('') || '<div class="card entry-card" style="font-size:12.5px; color:var(--gray-2);">Ninguna tarea con esos filtros.</div>';
+  rtEnlazar(cont);
+  const ver = $('#checkupVerRuta'); if(ver) ver.onclick = ()=>switchView('ruta');
+}
+function renderPortadaToca(){
+  const cont = $('#ptLista'); if(!cont) return;
+  const lista = rtLista(); const total = lista.length, hechas = lista.filter(t=>t.estado==='Hecho').length;
+  const pct = total ? Math.round(hechas/total*100) : 0;
+  const crit = lista.filter(t=>t.critica && t.estado!=='Hecho').length, venc = lista.filter(rtVencida).length;
+  $('#ptResumen').innerHTML = `<div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:8px;"><span style="font-family:var(--mono); font-size:22px; font-weight:800; color:var(--white);">${pct}%</span><span style="font-size:12.5px; color:var(--gray-1);">de la ruta de trabajo · ${hechas} de ${total} tareas hechas · ${crit} críticas pendientes${venc?` · <b style="color:var(--red);">${venc} vencidas</b>`:''}</span></div><div class="rt-bar"><i style="width:${pct}%;"></i></div>`;
+  const prox = rtOrdenPendientes().slice(0,5);
+  cont.innerHTML = prox.length ? prox.map(rtTarjeta).join('') : '<div class="card entry-card" style="font-size:13px; color:var(--green);">Todas las tareas de la ruta están hechas.</div>';
+  rtEnlazar(cont);
+  const b = $('#ptVerRuta'); if(b) b.onclick = ()=>switchView('ruta');
+}
+function switchNegTab(name){
+  $all('#negTabs button').forEach(b=>b.classList.toggle('active', b.dataset.ntab===name));
+  $all('.ntab-pane').forEach(p=>p.classList.toggle('active', p.dataset.pane===name));
+}
+function aplicarTema(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('apd_tema', t); }catch(e){}
+  const b = $('#btnTema'); if(b) b.textContent = (t==='claro') ? '◐ Cambiar a tema oscuro' : '◐ Cambiar a tema claro';
+}
 function renderAll(){
   safeRun('bindCliente', bindCliente);
   safeRun('renderSnapshot', renderSnapshot);
@@ -4951,6 +5402,9 @@ function renderAll(){
   safeRun('renderCheckupOperativo', renderCheckupOperativo);
   safeRun('renderDiagnosticoProcesos', renderDiagnosticoProcesos);
   safeRun('renderEvaluacionEquipo', renderEvaluacionEquipo);
+  safeRun('renderInventario', renderInventario);
+  safeRun('renderRutaTrabajo', renderRutaTrabajo);
+  safeRun('renderPortadaToca', renderPortadaToca);
   safeRun('renderDiagnosticoFinanciero', renderDiagnosticoFinanciero);
   safeRun('renderHitos', renderHitos);
   safeRun('renderExpediente', renderExpediente);
